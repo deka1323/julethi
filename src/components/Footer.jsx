@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, MapPin, Lock } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -59,7 +59,7 @@ const Footer = () => {
               
               {/* Social Icons */}
               <div className="flex space-x-4 mt-4">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                    className="text-teal-300 hover:text-yellow-300 transition-colors">
                   <Instagram className="h-4 w-4" />
                 </a>
@@ -67,6 +67,10 @@ const Footer = () => {
                    className="text-teal-300 hover:text-yellow-300 transition-colors">
                   <Facebook className="h-4 w-4" />
                 </a>
+                <Link to="/login"
+                   className="text-teal-300 hover:text-yellow-300 transition-colors">
+                  <Lock className="h-4 w-4" />
+                </Link>
               </div>
             </div>
           </div>

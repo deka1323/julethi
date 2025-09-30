@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Instagram, Facebook, ChevronDown, User, Menu, X } from 'lucide-react';
+import { Search, Instagram, Facebook, ChevronDown, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -164,13 +164,6 @@ const Navbar = () => {
                 </button>
               )}
             </div>
-
-            <Link
-              to="/profile"
-              className="text-white hover:text-yellow-300 transition-colors duration-200"
-            >
-              <User className="h-4 w-4" />
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -195,7 +188,6 @@ const Navbar = () => {
               <Link to="/shop/fusion" className="block px-3 py-2 text-white hover:text-yellow-300 text-sm pl-6">Fusion Wear</Link>
               <Link to="/about" className="block px-3 py-2 text-white hover:text-yellow-300 text-sm">About Us</Link>
               <Link to="/contact" className="block px-3 py-2 text-white hover:text-yellow-300 text-sm">Contact</Link>
-              <Link to="/profile" className="block px-3 py-2 text-white hover:text-yellow-300 text-sm">Profile</Link>
             </div>
           </div>
         )}

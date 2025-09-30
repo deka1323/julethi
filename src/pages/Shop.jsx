@@ -1,105 +1,53 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Filter, Grid, List, Heart, Star } from 'lucide-react';
 
 const Shop = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
+  const filterParam = searchParams.get('filter') || '';
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [viewMode, setViewMode] = useState('grid'); // default grid
+  const [showNewArrivalsOnly, setShowNewArrivalsOnly] = useState(filterParam === 'new');
+  const [viewMode, setViewMode] = useState('grid');
   const [sortBy, setSortBy] = useState('featured');
 
-  // Sample products - in real app, this would come from API
-  const allProducts = [
-    {
-      id: 1,
-      name: 'Classic Muga Silk Mekhela',
-      category: 'bridal',
-      price: 55000,
-      originalPrice: 65000,
-      image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg',
-      rating: 5,
-      reviews: 24,
-      isNew: false,
-      isSale: true
-    },
-    {
-      id: 2,
-      name: 'Handwoven Eri Silk Saree',
-      category: 'occasion',
-      price: 35000,
-      originalPrice: null,
-      image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg',
-      rating: 5,
-      reviews: 18,
-      isNew: true,
-      isSale: false
-    },
-    {
-      id: 3,
-      name: 'Designer Lehenga Set',
-      category: 'bridal',
-      price: 42000,
-      originalPrice: null,
-      image: 'https://images.pexels.com/photos/1721558/pexels-photo-1721558.jpeg',
-      rating: 4,
-      reviews: 31,
-      isNew: false,
-      isSale: false
-    },
-    {
-      id: 4,
-      name: 'Contemporary Kurta Set',
-      category: 'fusion',
-      price: 15000,
-      originalPrice: 18000,
-      image: 'https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg',
-      rating: 4,
-      reviews: 12,
-      isNew: true,
-      isSale: true
-    },
-    {
-      id: 5,
-      name: 'Royal Assamese Gamusa Saree',
-      category: 'occasion',
-      price: 28000,
-      originalPrice: null,
-      image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg',
-      rating: 5,
-      reviews: 22,
-      isNew: false,
-      isSale: false
-    },
-    {
-      id: 6,
-      name: 'Fusion Indo-Western Dress',
-      category: 'fusion',
-      price: 22000,
-      originalPrice: null,
-      image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg',
-      rating: 4,
-      reviews: 8,
-      isNew: true,
-      isSale: false
-    }
-  ];
+  const allProducts = useSelector((state) => state.products.products);
 
-  // Filter products based on search query
-  const filteredProducts = searchQuery
-    ? allProducts.filter(product =>
+  useEffect(() => {
+    setShowNewArrivalsOnly(filterParam === 'new');
+  }, [filterParam]);
+
+  let filteredProducts = allProducts;
+
+  if (searchQuery) {
+    filteredProducts = filteredProducts.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    : selectedCategory === 'all'
-      ? allProducts
-      : allProducts.filter(product => product.category === selectedCategory);
+    );
+  }
+
+  if (showNewArrivalsOnly) {
+    filteredProducts = filteredProducts.filter(product => product.isNewArrival);
+  }
+
+  if (selectedCategory !== 'all') {
+    filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+  }
+
+  if (sortBy === 'price-low') {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
+  } else if (sortBy === 'price-high') {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
+  } else if (sortBy === 'newest') {
+    filteredProducts = [...filteredProducts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
 
   const categories = [
-    { id: 'all', name: 'All Collections', count: allProducts.length },
-    { id: 'bridal', name: 'Bridal Wear', count: allProducts.filter(p => p.category === 'bridal').length },
-    { id: 'occasion', name: 'Occasion Wear', count: allProducts.filter(p => p.category === 'occasion').length },
-    { id: 'fusion', name: 'Fusion Wear', count: allProducts.filter(p => p.category === 'fusion').length }
+    { id: 'all', name: 'All Collections', count: showNewArrivalsOnly ? allProducts.filter(p => p.isNewArrival).length : allProducts.length },
+    { id: 'bridal', name: 'Bridal Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'bridal' && p.isNewArrival).length : allProducts.filter(p => p.category === 'bridal').length },
+    { id: 'occasion', name: 'Occasion Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'occasion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'occasion').length },
+    { id: 'fusion', name: 'Fusion Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'fusion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'fusion').length }
   ];
 
   return (
@@ -108,11 +56,13 @@ const Shop = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
-            {searchQuery ? `Search Results for "${searchQuery}"` : 'All Collections'}
+            {searchQuery ? `Search Results for "${searchQuery}"` : showNewArrivalsOnly ? 'New Arrivals' : 'All Collections'}
           </h1>
           <p className="text-gray-600">
             {searchQuery
               ? `Found ${filteredProducts.length} items`
+              : showNewArrivalsOnly
+              ? 'Discover our latest additions'
               : 'Discover our complete collection of handcrafted Assamese couture'
             }
           </p>
@@ -120,6 +70,18 @@ const Shop = () => {
 
         {/* Category Filter */}
         <div className="mb-8">
+          <div className="flex flex-wrap gap-2 mb-4">
+            <button
+              onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                showNewArrivalsOnly
+                  ? 'bg-rose-500 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
+              }`}
+            >
+              {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
+            </button>
+          </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
@@ -183,22 +145,17 @@ const Shop = () => {
             : 'grid-cols-1'
             }`}>
             {filteredProducts.map((product) => (
-              <div key={product.id} className={`group cursor-pointer ${viewMode === 'list' ? 'flex space-x-6' : ''
+              <Link to={`/product/${product.id}`} key={product.id} className={`group cursor-pointer ${viewMode === 'list' ? 'flex space-x-6' : ''
                 }`}>
                 <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-48 h-48 flex-shrink-0' : 'mb-4'
                   }`}>
-                  {product.isNew && (
-                    <span className="absolute top-4 left-4 bg-teal-600 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
+                  {product.isNewArrival && (
+                    <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
                       New
                     </span>
                   )}
-                  {product.isSale && (
-                    <span className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
-                      Sale
-                    </span>
-                  )}
                   <img
-                    src={product.image}
+                    src={product.imgUrl}
                     alt={product.name}
                     className={`w-full object-cover group-hover:scale-110 transition-transform duration-500 ${viewMode === 'list' ? 'h-48' : 'h-80'
                       }`}
@@ -214,21 +171,16 @@ const Shop = () => {
                   <h3 className="text-sm text-gray-700 mb-2">{product.name}</h3>
                   <div className="flex items-center space-x-2">
                     <span className="text-teal-600 text-sm">
-                      ₹{product.price.toLocaleString()}
+                      ₹{product.price.toLocaleString('en-IN')}
                     </span>
-                    {product.originalPrice && (
-                      <span className="text-gray-500 line-through text-xs">
-                        ₹{product.originalPrice.toLocaleString()}
-                      </span>
-                    )}
                   </div>
                   {viewMode === 'list' && (
                     <p className="text-gray-600 text-sm mt-2 line-clamp-2">
-                      Exquisite handcrafted piece showcasing traditional Assamese artistry with contemporary elegance.
+                      {product.description}
                     </p>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

@@ -1,0 +1,141 @@
+import { useSelector } from 'react-redux';
+import { Package, TrendingUp, ShoppingBag, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export default function Overview() {
+  const products = useSelector((state) => state.products.products);
+
+  const totalProducts = products.length;
+  const bridalCount = products.filter((p) => p.category === 'bridal').length;
+  const fusionCount = products.filter((p) => p.category === 'fusion').length;
+  const occasionCount = products.filter((p) => p.category === 'occasion').length;
+  const newArrivals = products.filter((p) => p.isNewArrival).length;
+  const totalValue = products.reduce((sum, p) => sum + p.price, 0);
+  const averagePrice = totalProducts > 0 ? (totalValue / totalProducts).toFixed(0) : 0;
+
+  const stats = [
+    {
+      title: 'Total Products',
+      value: totalProducts,
+      icon: Package,
+      color: 'bg-blue-500',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-50',
+    },
+    {
+      title: 'New Arrivals',
+      value: newArrivals,
+      icon: Sparkles,
+      color: 'bg-rose-500',
+      textColor: 'text-rose-600',
+      bgColor: 'bg-rose-50',
+    },
+    {
+      title: 'Avg. Price',
+      value: `₹${parseInt(averagePrice).toLocaleString('en-IN')}`,
+      icon: TrendingUp,
+      color: 'bg-green-500',
+      textColor: 'text-green-600',
+      bgColor: 'bg-green-50',
+    },
+    {
+      title: 'Total Value',
+      value: `₹${totalValue.toLocaleString('en-IN')}`,
+      icon: ShoppingBag,
+      color: 'bg-yellow-500',
+      textColor: 'text-yellow-600',
+      bgColor: 'bg-yellow-50',
+    },
+  ];
+
+  const categoryData = [
+    { name: 'Bridal Wear', count: bridalCount, color: 'bg-pink-500', percentage: ((bridalCount / totalProducts) * 100).toFixed(0) },
+    { name: 'Fusion Wear', count: fusionCount, color: 'bg-blue-500', percentage: ((fusionCount / totalProducts) * 100).toFixed(0) },
+    { name: 'Occasion Wear', count: occasionCount, color: 'bg-teal-500', percentage: ((occasionCount / totalProducts) * 100).toFixed(0) },
+  ];
+
+  const recentProducts = products
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 5);
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-slate-800">Dashboard Overview</h1>
+        <p className="text-slate-600 mt-1">Welcome back! Here's your boutique summary.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-slate-600 mb-1">{stat.title}</p>
+                  <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                </div>
+                <div className={`${stat.bgColor} p-3 rounded-xl`}>
+                  <Icon className={`w-6 h-6 ${stat.textColor}`} />
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Category Distribution</h3>
+          <div className="space-y-4">
+            {categoryData.map((category) => (
+              <div key={category.name}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-slate-700">{category.name}</span>
+                  <span className="text-sm text-slate-600">{category.count} products ({category.percentage}%)</span>
+                </div>
+                <div className="w-full bg-slate-200 rounded-full h-2">
+                  <div
+                    className={`${category.color} h-2 rounded-full transition-all duration-500`}
+                    style={{ width: `${category.percentage}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Recent Products</h3>
+          <div className="space-y-3">
+            {recentProducts.map((product) => (
+              <div key={product.id} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition">
+                <img
+                  src={product.imgUrl}
+                  alt={product.name}
+                  className="w-12 h-12 rounded-lg object-cover"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-slate-800 truncate">{product.name}</p>
+                  <p className="text-xs text-slate-500 capitalize">{product.category}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-slate-800">₹{product.price.toLocaleString('en-IN')}</p>
+                  {product.isNewArrival && (
+                    <span className="text-xs text-rose-600 font-medium">New</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

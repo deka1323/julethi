@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ArrowRight, Star, Instagram, Heart, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,6 +11,8 @@ import 'swiper/css/navigation';
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const products = useSelector((state) => state.products.products);
+  const newArrivalsProducts = products.filter((p) => p.isNewArrival).slice(0, 4);
 
   const heroSlides = [
     {
@@ -74,36 +77,6 @@ const Home = () => {
     }
   ];
 
-  const newArrivals = [
-    {
-      id: 1,
-      name: 'Mekhela Chador Royale',
-      price: '₹45,000',
-      image: '/images/5.jpg',
-      isNew: true
-    },
-    {
-      id: 2,
-      name: 'Golden Silk Ensemble',
-      price: '₹32,000',
-      image: '/images/6.jpeg',
-      isNew: true
-    },
-    {
-      id: 3,
-      name: 'Heritage Weave Saree',
-      price: '₹28,000',
-      image: '/images/7.jpeg',
-      isNew: true
-    },
-    {
-      id: 4,
-      name: 'Contemporary Kurta Set',
-      price: '₹15,000',
-      image: '/images/8.jpeg',
-      isNew: true
-    }
-  ];
 
   const bestSellers = [
     {
@@ -311,16 +284,16 @@ const Home = () => {
             {/* <p className="text-lg text-gray-600">Fresh designs that capture the essence of modern Assamese couture</p> */}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {newArrivals.map((item) => (
-              <div key={item.id} className="group cursor-pointer">
+            {newArrivalsProducts.map((item) => (
+              <Link key={item.id} to={`/product/${item.id}`} className="group cursor-pointer">
                 <div className="relative overflow-hidden rounded-none mb-4">
-                  {item.isNew && (
-                    <span className="absolute top-4 left-4 bg-teal-600 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
+                  {item.isNewArrival && (
+                    <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
                       New
                     </span>
                   )}
                   <img
-                    src={item.image}
+                    src={item.imgUrl}
                     alt={item.name}
                     className="w-full h-[28rem] object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -331,16 +304,16 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-sm text-gray-700 mb-2">{item.name}</h3>
-                <p className="text-teal-600 text-sm">{item.price}</p>
-              </div>
+                <p className="text-teal-600 text-sm">₹{item.price.toLocaleString('en-IN')}</p>
+              </Link>
             ))}
           </div>
           <div className="text-center mt-8">
             <Link
-              to="/shop"
+              to="/shop?filter=new"
               className="inline-flex items-center bg-teal-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-teal-700 transition-colors"
             >
-              View All
+              View All New Arrivals
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
