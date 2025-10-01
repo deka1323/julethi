@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../redux/actions/authActions';
+import { login, loginSuccess } from '../redux/actions/authActions';
 import { motion } from 'framer-motion';
 import { Lock, User } from 'lucide-react';
 
@@ -9,12 +9,14 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     if (username === 'admin' && password === 'admin123') {
       const user = {
@@ -23,9 +25,11 @@ export default function Login() {
         name: 'Admin User'
       };
       dispatch(loginSuccess(user));
+      setLoading(false);
       navigate('/admin');
     } else {
       setError('Invalid username or password');
+      setLoading(false);
     }
   };
 
@@ -94,9 +98,10 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-slate-800 text-white py-3 rounded-lg font-medium hover:bg-slate-700 transition duration-200 transform hover:scale-[1.02]"
+            disabled={loading}
+            className="w-full bg-slate-800 text-white py-3 rounded-lg font-medium hover:bg-slate-700 transition duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Sign In
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 

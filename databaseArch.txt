@@ -1,0 +1,435 @@
+=============================================================================
+                    JULETHI BOUTIQUE - DYNAMODB ARCHITECTURE
+=============================================================================
+
+TABLE NAME: JulethiBoutiqueTable
+
+PRIMARY KEY STRUCTURE:
+- Partition Key (PK): Entity
+- Sort Key (SK): Type
+
+GLOBAL SECONDARY INDEXES:
+1. GSI1: GSI1PK (Partition Key), GSI1SK (Sort Key)
+   - Purpose: Query products by category
+
+2. GSI2: GSI2PK (Partition Key), GSI2SK (Sort Key)
+   - Purpose: Query new arrivals and filter by date
+
+=============================================================================
+                          ITEM STRUCTURES
+=============================================================================
+
+1. PRODUCT ITEM
+---------------
+{
+  "Entity": "PRODUCT",
+  "Type": "PRODUCT#<productId>",               // e.g., PRODUCT#BR123456
+  "productId": "BR123456",                      // Category prefix + unique number
+  "name": "Royal Red Bridal Lehenga",
+  "imgUrl": "https://...",
+  "price": 45000,
+  "fabric": "Silk & Velvet",
+  "category": "bridal",                         // bridal | fusion | occasion
+  "description": "Elegant red bridal lehenga...",
+  "isNewArrival": true,
+  "createdAt": "2025-09-28T12:00:00.000Z",
+  "updatedAt": "2025-09-28T12:00:00.000Z",
+
+  // GSI1 - For category queries
+  "GSI1PK": "CATEGORY#bridal",
+  "GSI1SK": "PRODUCT#BR123456",
+
+  // GSI2 - For new arrivals and date sorting
+  "GSI2PK": "NEW_ARRIVAL#true",                 // or NEW_ARRIVAL#false
+  "GSI2SK": "2025-09-28T12:00:00.000Z"          // ISO timestamp for sorting
+}
+
+2. ADMIN USER ITEM
+------------------
+{
+  "Entity": "ADMIN",
+  "Type": "ADMIN#admin",
+  "username": "admin",
+  "password": "admin123",                        // In production, use hashed password
+  "name": "Admin User",
+  "isAdmin": true,
+  "createdAt": "2025-01-01T00:00:00.000Z"
+}
+
+=============================================================================
+                    CATEGORY PREFIX MAPPING
+=============================================================================
+
+Category        Prefix      Example ID
+-------------------------------------------------
+bridal          BR          BR123456
+fusion          FS          FS789012
+occasion        OC          OC345678
+
+ID Generation Pattern: {PREFIX}{6-digit-random-number}
+
+=============================================================================
+                        ACCESS PATTERNS & QUERIES
+=============================================================================
+
+1. GET ALL PRODUCTS
+-------------------
+Operation: Query
+Parameters: None
+Query:
+  PK = "PRODUCT"
+  SK begins_with "PRODUCT#"
+Response: List of all products
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "KeyConditionExpression": "Entity = :pk AND begins_with(#type, :sk)",
+  "ExpressionAttributeNames": {
+    "#type": "Type"
+  },
+  "ExpressionAttributeValues": {
+    ":pk": {"S": "PRODUCT"},
+    ":sk": {"S": "PRODUCT#"}
+  }
+}
+
+
+2. GET PRODUCT BY ID
+--------------------
+Operation: GetItem
+Parameters: productId (e.g., "BR123456")
+Query:
+  PK = "PRODUCT"
+  SK = "PRODUCT#BR123456"
+Response: Single product item
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "Key": {
+    "Entity": {"S": "PRODUCT"},
+    "Type": {"S": "PRODUCT#BR123456"}
+  }
+}
+
+
+3. GET PRODUCTS BY CATEGORY
+----------------------------
+Operation: Query on GSI1
+Parameters: category ("bridal" | "fusion" | "occasion")
+Query:
+  GSI1PK = "CATEGORY#bridal"
+Response: List of products in specified category
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "IndexName": "GSI1",
+  "KeyConditionExpression": "GSI1PK = :category",
+  "ExpressionAttributeValues": {
+    ":category": {"S": "CATEGORY#bridal"}
+  }
+}
+
+
+4. GET NEW ARRIVALS
+-------------------
+Operation: Query on GSI2
+Parameters: None (isNewArrival = true)
+Query:
+  GSI2PK = "NEW_ARRIVAL#true"
+  GSI2SK sorted descending (most recent first)
+Response: List of new arrival products sorted by date
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "IndexName": "GSI2",
+  "KeyConditionExpression": "GSI2PK = :newArrival",
+  "ExpressionAttributeValues": {
+    ":newArrival": {"S": "NEW_ARRIVAL#true"}
+  },
+  "ScanIndexForward": false
+}
+
+
+5. GET NEW ARRIVALS BY CATEGORY
+--------------------------------
+Operation: Query on GSI1 with FilterExpression
+Parameters: category, isNewArrival = true
+Query:
+  GSI1PK = "CATEGORY#bridal"
+  Filter: isNewArrival = true
+Response: List of new arrivals in specified category
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "IndexName": "GSI1",
+  "KeyConditionExpression": "GSI1PK = :category",
+  "FilterExpression": "isNewArrival = :newArrival",
+  "ExpressionAttributeValues": {
+    ":category": {"S": "CATEGORY#bridal"},
+    ":newArrival": {"BOOL": true}
+  }
+}
+
+
+6. CREATE PRODUCT
+-----------------
+Operation: PutItem
+Parameters: Product object (without productId)
+Process:
+  1. Generate productId with category prefix
+  2. Set timestamps
+  3. Construct GSI keys
+  4. Insert item
+Response: Created product with productId
+
+DynamoDB Put:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "Item": {
+    "Entity": {"S": "PRODUCT"},
+    "Type": {"S": "PRODUCT#BR123456"},
+    "productId": {"S": "BR123456"},
+    "name": {"S": "Product Name"},
+    "imgUrl": {"S": "https://..."},
+    "price": {"N": "45000"},
+    "fabric": {"S": "Silk"},
+    "category": {"S": "bridal"},
+    "description": {"S": "Description..."},
+    "isNewArrival": {"BOOL": true},
+    "createdAt": {"S": "2025-10-01T12:00:00.000Z"},
+    "updatedAt": {"S": "2025-10-01T12:00:00.000Z"},
+    "GSI1PK": {"S": "CATEGORY#bridal"},
+    "GSI1SK": {"S": "PRODUCT#BR123456"},
+    "GSI2PK": {"S": "NEW_ARRIVAL#true"},
+    "GSI2SK": {"S": "2025-10-01T12:00:00.000Z"}
+  }
+}
+
+
+7. UPDATE PRODUCT
+-----------------
+Operation: UpdateItem
+Parameters: productId, updated fields
+Process:
+  1. Update specified fields
+  2. Update GSI keys if category or isNewArrival changed
+  3. Update updatedAt timestamp
+Response: Updated product
+
+DynamoDB Update:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "Key": {
+    "Entity": {"S": "PRODUCT"},
+    "Type": {"S": "PRODUCT#BR123456"}
+  },
+  "UpdateExpression": "SET #name = :name, price = :price, updatedAt = :updatedAt",
+  "ExpressionAttributeNames": {
+    "#name": "name"
+  },
+  "ExpressionAttributeValues": {
+    ":name": {"S": "Updated Name"},
+    ":price": {"N": "50000"},
+    ":updatedAt": {"S": "2025-10-01T14:00:00.000Z"}
+  },
+  "ReturnValues": "ALL_NEW"
+}
+
+
+8. DELETE PRODUCT
+-----------------
+Operation: DeleteItem
+Parameters: productId
+Query:
+  PK = "PRODUCT"
+  SK = "PRODUCT#BR123456"
+Response: Success confirmation
+
+DynamoDB Delete:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "Key": {
+    "Entity": {"S": "PRODUCT"},
+    "Type": {"S": "PRODUCT#BR123456"}
+  }
+}
+
+
+9. SEARCH PRODUCTS
+------------------
+Operation: Scan with FilterExpression
+Parameters: searchQuery (string)
+Filter:
+  name contains searchQuery OR
+  description contains searchQuery OR
+  category contains searchQuery
+Response: List of matching products
+
+DynamoDB Scan:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "FilterExpression": "contains(#name, :query) OR contains(description, :query) OR contains(category, :query)",
+  "ExpressionAttributeNames": {
+    "#name": "name"
+  },
+  "ExpressionAttributeValues": {
+    ":query": {"S": "silk"}
+  }
+}
+
+
+10. ADMIN LOGIN
+---------------
+Operation: GetItem
+Parameters: username
+Query:
+  PK = "ADMIN"
+  SK = "ADMIN#admin"
+Response: Admin user object (verify password in Lambda)
+
+DynamoDB Query:
+{
+  "TableName": "JulethiBoutiqueTable",
+  "Key": {
+    "Entity": {"S": "ADMIN"},
+    "Type": {"S": "ADMIN#admin"}
+  }
+}
+
+
+11. GET DASHBOARD STATISTICS
+-----------------------------
+Operation: Multiple queries
+Parameters: None
+Queries:
+  1. Count all products (Query with Select: COUNT)
+  2. Count by category (Query GSI1 for each category)
+  3. Count new arrivals (Query GSI2 with NEW_ARRIVAL#true)
+Response: Statistics object
+
+=============================================================================
+                    LAMBDA FUNCTION ENDPOINTS
+=============================================================================
+
+1. getAllProducts
+   Method: GET
+   Path: /products
+   Auth: Public
+
+2. getProductById
+   Method: GET
+   Path: /products/{productId}
+   Auth: Public
+
+3. getProductsByCategory
+   Method: GET
+   Path: /products/category/{category}
+   Auth: Public
+
+4. getNewArrivals
+   Method: GET
+   Path: /products/new-arrivals
+   Auth: Public
+
+5. searchProducts
+   Method: GET
+   Path: /products/search?q={query}
+   Auth: Public
+
+6. createProduct
+   Method: POST
+   Path: /products
+   Auth: Admin Required
+   Body: Product object
+
+7. updateProduct
+   Method: PUT
+   Path: /products/{productId}
+   Auth: Admin Required
+   Body: Updated fields
+
+8. deleteProduct
+   Method: DELETE
+   Path: /products/{productId}
+   Auth: Admin Required
+
+9. adminLogin
+   Method: POST
+   Path: /auth/login
+   Auth: Public
+   Body: { username, password }
+
+10. getDashboardStats
+    Method: GET
+    Path: /admin/stats
+    Auth: Admin Required
+
+=============================================================================
+                        TABLE CREATION
+=============================================================================
+
+AWS CLI Command:
+
+aws dynamodb create-table \
+  --table-name JulethiBoutiqueTable \
+  --attribute-definitions \
+    AttributeName=Entity,AttributeType=S \
+    AttributeName=Type,AttributeType=S \
+    AttributeName=GSI1PK,AttributeType=S \
+    AttributeName=GSI1SK,AttributeType=S \
+    AttributeName=GSI2PK,AttributeType=S \
+    AttributeName=GSI2SK,AttributeType=S \
+  --key-schema \
+    AttributeName=Entity,KeyType=HASH \
+    AttributeName=Type,KeyType=RANGE \
+  --global-secondary-indexes \
+    "[
+      {
+        \"IndexName\": \"GSI1\",
+        \"KeySchema\": [
+          {\"AttributeName\":\"GSI1PK\",\"KeyType\":\"HASH\"},
+          {\"AttributeName\":\"GSI1SK\",\"KeyType\":\"RANGE\"}
+        ],
+        \"Projection\": {\"ProjectionType\":\"ALL\"},
+        \"ProvisionedThroughput\": {
+          \"ReadCapacityUnits\": 5,
+          \"WriteCapacityUnits\": 5
+        }
+      },
+      {
+        \"IndexName\": \"GSI2\",
+        \"KeySchema\": [
+          {\"AttributeName\":\"GSI2PK\",\"KeyType\":\"HASH\"},
+          {\"AttributeName\":\"GSI2SK\",\"KeyType\":\"RANGE\"}
+        ],
+        \"Projection\": {\"ProjectionType\":\"ALL\"},
+        \"ProvisionedThroughput\": {
+          \"ReadCapacityUnits\": 5,
+          \"WriteCapacityUnits\": 5
+        }
+      }
+    ]" \
+  --provisioned-throughput \
+    ReadCapacityUnits=5,WriteCapacityUnits=5
+
+=============================================================================
+                            NOTES
+=============================================================================
+
+1. All timestamps are stored in ISO 8601 format (UTC)
+2. Product IDs are immutable once created
+3. GSI keys must be updated when category or isNewArrival changes
+4. Use batch operations for bulk imports
+5. Consider using DynamoDB Streams for audit logging
+6. In production, implement proper authentication using AWS Cognito
+7. Add pagination for large result sets using LastEvaluatedKey
+8. Consider TTL for temporary items if needed
+9. Monitor RCU/WCU usage and adjust capacity as needed
+10. Use conditional writes to prevent overwrites
+
+=============================================================================
