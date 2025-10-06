@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, addProductSuccess } from '../../redux/actions/productActions';
-import { generateProductId } from '../../utils/productIdGenerator';
+import { addProduct } from '../../redux/actions/productActions';
 import { Save, ArrowLeft } from 'lucide-react';
 
 export default function AddProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     imgUrl: '',
@@ -27,21 +25,17 @@ export default function AddProduct() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    const productId = generateProductId(formData.category);
     const newProduct = {
-      id: productId,
-      productId,
+      id: Date.now().toString(),
       ...formData,
       price: parseInt(formData.price),
       createdAt: new Date().toISOString(),
     };
 
-    dispatch(addProductSuccess(newProduct));
-    setLoading(false);
+    dispatch(addProduct(newProduct));
     navigate('/admin/products');
   };
 
@@ -177,11 +171,10 @@ export default function AddProduct() {
           <div className="flex space-x-4">
             <button
               type="submit"
-              disabled={loading}
-              className="flex-1 bg-yellow-500 text-slate-900 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-yellow-500 text-slate-900 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center space-x-2"
             >
               <Save className="w-5 h-5" />
-              <span>{loading ? 'Adding...' : 'Add Product'}</span>
+              <span>Add Product</span>
             </button>
             <button
               type="button"

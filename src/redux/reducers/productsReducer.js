@@ -141,23 +141,6 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_LOADING':
-      return {
-        ...state,
-        loading: action.payload
-      };
-    case 'SET_ERROR':
-      return {
-        ...state,
-        error: action.payload,
-        loading: false
-      };
-    case 'SET_PRODUCTS':
-      return {
-        ...state,
-        products: action.payload,
-        error: null
-      };
     case 'ADD_PRODUCT':
       return {
         ...state,
@@ -174,6 +157,11 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         products: state.products.filter(product => product.id !== action.payload)
+      };
+    case 'SET_PRODUCTS':
+      return {
+        ...state,
+        products: action.payload
       };
     default:
       return state;
