@@ -7,7 +7,7 @@
  * 3. Configure CORS in API Gateway
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://your-api-gateway-url.execute-api.region.amazonaws.com/prod';
+const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
 
 class ApiService {
   constructor() {
@@ -18,7 +18,7 @@ class ApiService {
     const url = `${this.baseURL}${endpoint}`;
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options.headers,
       },
       ...options,
@@ -29,26 +29,26 @@ class ApiService {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'API request failed');
+        throw new Error(data.error || "API request failed");
       }
 
       return data;
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
       throw error;
     }
   }
 
   async get(endpoint, options = {}) {
     return this.request(endpoint, {
-      method: 'GET',
+      method: "GET",
       ...options,
     });
   }
 
   async post(endpoint, body, options = {}) {
     return this.request(endpoint, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(body),
       ...options,
     });
@@ -56,7 +56,7 @@ class ApiService {
 
   async put(endpoint, body, options = {}) {
     return this.request(endpoint, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(body),
       ...options,
     });
@@ -64,14 +64,14 @@ class ApiService {
 
   async delete(endpoint, options = {}) {
     return this.request(endpoint, {
-      method: 'DELETE',
+      method: "DELETE",
       ...options,
     });
   }
 
   // Product APIs
   async getAllProducts() {
-    return this.get('/products');
+    return this.get("/products");
   }
 
   async getProductById(productId) {
@@ -83,7 +83,7 @@ class ApiService {
   }
 
   async getNewArrivals() {
-    return this.get('/products/new-arrivals');
+    return this.get("/products/new-arrivals");
   }
 
   async searchProducts(query) {
@@ -91,7 +91,7 @@ class ApiService {
   }
 
   async createProduct(productData) {
-    return this.post('/products', productData);
+    return this.post("/products", productData);
   }
 
   async updateProduct(productId, productData) {
@@ -104,12 +104,12 @@ class ApiService {
 
   // Authentication APIs
   async adminLogin(username, password) {
-    return this.post('/auth/login', { username, password });
+    return this.post("/auth/login", { username, password });
   }
 
   // Admin APIs
   async getDashboardStats() {
-    return this.get('/admin/stats');
+    return this.get("/admin/stats");
   }
 }
 
