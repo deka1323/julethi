@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Filter, Grid, List, Heart, Star } from 'lucide-react';
+import { fetchAllProducts, fetchProductsByCategory } from '../redux/actions/productActions';
 
 const Shop = () => {
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
   const filterParam = searchParams.get('filter') || '';
@@ -13,6 +15,11 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState('featured');
 
   const allProducts = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
   useEffect(() => {
     setShowNewArrivalsOnly(filterParam === 'new');
@@ -139,12 +146,20 @@ const Shop = () => {
             </div>
           </div>
 
+          {/* Loading State */}
+          {loading && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">Loading products...</p>
+            </div>
+          )}
+
           {/* Products Grid */}
-          <div className={`grid gap-6 ${viewMode === 'grid'
-            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-            : 'grid-cols-1'
-            }`}>
-            {filteredProducts.map((product) => (
+          {!loading && (
+            <div className={`grid gap-6 ${viewMode === 'grid'
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+              : 'grid-cols-1'
+              }`}>
+              {filteredProducts.map((product) => (
               <Link to={`/product/${product.id}`} key={product.id} className={`group cursor-pointer ${viewMode === 'list' ? 'flex space-x-6' : ''
                 }`}>
                 <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-48 h-48 flex-shrink-0' : 'mb-4'
@@ -181,11 +196,12 @@ const Shop = () => {
                   )}
                 </div>
               </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* No results */}
-          {filteredProducts.length === 0 && (
+          {!loading && filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No products found matching your search.</p>
               <Link

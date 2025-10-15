@@ -1,9 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Package, TrendingUp, ShoppingBag, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { fetchAllProducts } from '../../redux/actions/productActions';
 
 export default function Overview() {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
   const totalProducts = products.length;
   const bridalCount = products.filter((p) => p.category === 'bridal').length;
@@ -57,6 +65,14 @@ export default function Overview() {
   const recentProducts = products
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-slate-600">Loading dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

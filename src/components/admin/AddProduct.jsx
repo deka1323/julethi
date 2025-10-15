@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, addProductSuccess } from '../../redux/actions/productActions';
-import { generateProductId } from '../../utils/productIdGenerator';
+import { createProduct } from '../../redux/actions/productActions';
 import { Save, ArrowLeft } from 'lucide-react';
 
 export default function AddProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     imgUrl: '',
@@ -30,19 +30,30 @@ export default function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
-    const productId = generateProductId(formData.category);
-    const newProduct = {
-      id: productId,
-      productId,
-      ...formData,
+    const productData = {
+      name: formData.name,
+      imgUrl: formData.imgUrl,
       price: parseInt(formData.price),
-      createdAt: new Date().toISOString(),
+      fabric: formData.fabric,
+      category: formData.category,
+      description: formData.description,
+      isNewArrival: formData.isNewArrival,
     };
 
-    dispatch(addProductSuccess(newProduct));
-    setLoading(false);
-    navigate('/admin/products');
+    try {
+      const response = await dispatch(createProduct(productData));
+      if (response.success) {
+        navigate('/admin/products');
+      } else {
+        setError(response.error || 'Failed to create product');
+        setLoading(false);
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to create product');
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,6 +73,12 @@ export default function AddProduct() {
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800 text-sm">{error}</p>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>

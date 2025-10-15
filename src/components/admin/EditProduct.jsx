@@ -9,8 +9,10 @@ export default function EditProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.products);
-  const product = products.find((p) => p.id === id);
-
+  const product = products.find((p) => p.id === id || p.productId === id);
+  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     imgUrl: '',
@@ -43,17 +45,34 @@ export default function EditProduct() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
-    const updatedProduct = {
-      ...product,
-      ...formData,
+    const productData = {
+      name: formData.name,
+      imgUrl: formData.imgUrl,
       price: parseInt(formData.price),
+      fabric: formData.fabric,
+      category: formData.category,
+      description: formData.description,
+      isNewArrival: formData.isNewArrival,
     };
 
-    dispatch(updateProduct(updatedProduct));
-    navigate('/admin/products');
+    try {
+      const productId = product.productId || product.id;
+      const response = await dispatch(updateProduct(productId, productData));
+      if (response.success) {
+        navigate('/admin/products');
+      } else {
+        setError(response.error || 'Failed to update product');
+        setLoading(false);
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to update product');
+      setLoading(false);
+    }
   };
 
   if (!product) {
@@ -81,6 +100,12 @@ export default function EditProduct() {
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800 text-sm">{error}</p>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -196,10 +221,11 @@ export default function EditProduct() {
           <div className="flex space-x-4">
             <button
               type="submit"
-              className="flex-1 bg-yellow-500 text-slate-900 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center space-x-2"
+              disabled={loading}
+              className="flex-1 bg-yellow-500 text-slate-900 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="w-5 h-5" />
-              <span>Update Product</span>
+              <span>{loading ? 'Updating...' : 'Update Product'}</span>
             </button>
             <button
               type="button"

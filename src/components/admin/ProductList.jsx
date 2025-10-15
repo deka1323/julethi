@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteProduct } from '../../redux/actions/productActions';
+import { fetchAllProducts, deleteProduct } from '../../redux/actions/productActions';
 import { Edit, Trash2, Search, Filter } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function ProductList() {
   const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -18,9 +23,13 @@ export default function ProductList() {
     return matchesSearch && matchesCategory;
   });
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      dispatch(deleteProduct(id));
+      try {
+        await dispatch(deleteProduct(id));
+      } catch (error) {
+        alert('Failed to delete product. Please try again.');
+      }
     }
   };
 
@@ -62,7 +71,14 @@ export default function ProductList() {
           Showing {filteredProducts.length} of {products.length} products
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-slate-600">Loading products...</p>
+          </div>
+        )}
+
+        {!loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product, index) => (
             <motion.div
               key={product.id}
@@ -113,9 +129,10 @@ export default function ProductList() {
               </div>
             </motion.div>
           ))}
-        </div>
+          </div>
+        )}
 
-        {filteredProducts.length === 0 && (
+        {!loading && filteredProducts.length === 0 && (
           <div className="text-center py-12">
             <p className="text-slate-600">No products found</p>
           </div>

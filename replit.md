@@ -20,10 +20,12 @@ A modern React-based e-commerce platform for a boutique specializing in bridal, 
 - **Alternative**: Supabase client library installed
 
 ### Current Setup
-- Frontend runs on port 5000
-- Products are currently using local Redux state (initial mock data)
+- Frontend runs on port 5000 with HMR enabled
+- Redux actions fully integrated with dispatch() throughout the application
+- API service layer connected to all components (Shop, Admin Dashboard, Product Management)
+- Products load from backend API when available, fallback to initial mock data
 - Admin authentication is hardcoded (username: admin, password: admin123)
-- API service layer ready for integration with backend
+- All CRUD operations (Create, Read, Update, Delete) integrated with productActions.js
 
 ## Project Structure
 
@@ -67,9 +69,11 @@ src/
 
 ### Admin Features
 - Secure login (currently hardcoded)
-- Dashboard with statistics
-- Add/Edit/Delete products
-- Product management with category-based ID generation
+- Dashboard with real-time statistics and category distribution
+- Add/Edit/Delete products with backend integration
+- Product management with category-based filtering
+- Loading states and error handling
+- Form validation and user feedback
 
 ## Product Categories
 - **Bridal**: Wedding and bridal wear (ID prefix: BR)
@@ -96,11 +100,45 @@ The application runs on Replit with Vite dev server on port 5000.
 - Password: `admin123`
 
 ## Recent Changes (October 15, 2025)
+### Initial Setup
 - Configured Vite for Replit environment (0.0.0.0:5000, HMR with WSS protocol)
 - Set up development workflow on port 5000
 - Configured HMR to use REPLIT_DEV_DOMAIN for proper WebSocket connection
 - Configured deployment settings (autoscale with build and preview)
 - Project successfully running in Replit with full hot module replacement
+
+### Backend Integration (Latest)
+- **Shop Page**: Integrated `fetchAllProducts()` dispatch on component mount
+  - Added loading states for better UX
+  - Products load from API when backend is configured
+  - Category filtering works with local state
+  
+- **Admin Overview**: Integrated `fetchAllProducts()` on dashboard load
+  - Real-time statistics calculation from fetched products
+  - Category distribution charts
+  - Recent products display
+  - Loading state during data fetch
+
+- **Admin ProductList**: 
+  - Integrated `fetchAllProducts()` on component mount
+  - Connected `deleteProduct()` async action with error handling
+  - Category filtering and search functionality
+  - Loading states and empty states
+
+- **Add Product Page**:
+  - Replaced local dispatch with `createProduct()` async action
+  - Proper error handling and user feedback
+  - Form validation
+  - Loading states during submission
+  - Navigates to product list on success
+
+- **Edit Product Page**:
+  - Fixed `updateProduct()` to use correct parameters (productId, productData)
+  - Added error handling and loading states
+  - Form pre-population from existing product data
+  - Proper navigation on success
+
+All components now use the proper async actions from `productActions.js` which integrate with the backend API service layer. The app gracefully falls back to initial mock data when backend is not configured.
 
 ## Next Steps
 1. Connect to backend API (AWS or Supabase)
