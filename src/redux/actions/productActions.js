@@ -42,11 +42,13 @@ export const fetchAllProducts = () => async (dispatch) => {
   try {
     const response = await apiService.getAllProducts();
     if (response.success) {
+      console.log("allProducts : ", response.data)
       dispatch(setProducts(response.data));
     }
     dispatch(setLoading(false));
     return response;
   } catch (error) {
+    console.log("error - ", error)
     dispatch(setError(error.message));
     dispatch(setLoading(false));
     throw error;

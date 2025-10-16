@@ -7,7 +7,7 @@
  * 3. Configure CORS in API Gateway
  */
 
-const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 class ApiService {
   constructor() {
@@ -16,6 +16,7 @@ class ApiService {
 
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    console.log("URL : ", url);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,7 @@ class ApiService {
 
       return data;
     } catch (error) {
-      console.error("API Error:", error);
+      console.log("API Error:", error);
       throw error;
     }
   }
