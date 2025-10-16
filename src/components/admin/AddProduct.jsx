@@ -1,23 +1,28 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../../redux/actions/productActions';
 import { Save, ArrowLeft } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
+
+const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 export default function AddProduct() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
-    imgUrl: '',
     price: '',
     fabric: '',
     category: '',
     description: '',
-    isNewArrival: false,
+    isNewArrival: false
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -27,34 +32,60 @@ export default function AddProduct() {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
 
+    const file = formData.imageFile;
+    const fileType = file.type;
+    const productId = `TMP${Date.now()}`;
+
+    // Step 1: get pre-signed URL
+    const res = await fetch(`${API_BASE_URL}/getUploadUrl`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ category: formData.category, fileType, productId }),
+    });
+
+    const { uploadURL, publicUrl } = await res.json();
+    console.log("uploadURL : ", uploadURL)
+    console.log("publicURL : ", publicUrl)
+    console.log("fileType ", fileType)
+
+    // Step 2: upload to S3
+    const uploadResponse = await fetch(uploadURL, {
+      method: "PUT",
+      headers: { "Content-Type": fileType },
+      body: file,
+    });
+
+    if (!uploadResponse.ok) throw new Error("Upload failed");
+
+    // Step 3: save product record with the S3 image URL
     const productData = {
-      name: formData.name,
-      imgUrl: formData.imgUrl,
-      price: parseInt(formData.price),
-      fabric: formData.fabric,
-      category: formData.category,
-      description: formData.description,
-      isNewArrival: formData.isNewArrival,
+      ...formData,
+      imgUrl: publicUrl,
     };
 
-    try {
-      const response = await dispatch(createProduct(productData));
-      if (response.success) {
-        navigate('/admin/products');
-      } else {
-        setError(response.error || 'Failed to create product');
-        setLoading(false);
-      }
-    } catch (err) {
-      setError(err.message || 'Failed to create product');
-      setLoading(false);
-    }
+    await dispatch(createProduct(productData));
+    toast.success('✅ Product added successfully!');
+
+    // ✅ Reset form
+    setFormData({
+      name: '',
+      price: '',
+      fabric: '',
+      category: '',
+      description: '',
+      isNewArrival: false,
+      imageFile: null,
+    });
   };
+
+
 
   return (
     <div className="space-y-6">
@@ -78,7 +109,7 @@ export default function AddProduct() {
             <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -148,20 +179,15 @@ export default function AddProduct() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Image URL
-            </label>
-            <input
-              type="url"
-              name="imgUrl"
-              value={formData.imgUrl}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              placeholder="https://example.com/image.jpg"
-            />
-          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, imageFile: e.target.files[0] }))
+            }
+            required
+          />
+
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
