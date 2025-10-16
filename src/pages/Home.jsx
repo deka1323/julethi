@@ -18,29 +18,28 @@ const Home = () => {
     {
       title: 'Timeless Assamese Elegance',
       // subtitle: 'Discover handcrafted couture that celebrates our rich heritage while embracing contemporary style',
-      image: '/images/1.jpeg',
+      image: '/images/hero1.png',
       cta: 'Explore Collection'
     },
     {
       title: 'Bridal Collection',
       // subtitle: 'Exquisite Muga silk ensembles for your most precious moments',
-      image: '/images/2.jpeg',
-      cta: 'View Bridal Wear'
+      image: '/images/hero2.png',
+      cta: 'Shop Bridal Wear'
     },
     {
-      title: 'Fusion Heritage',
+      title: 'Party Wear Perfection',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
-      image: '/images/3.jpg',
-      cta: 'Shop Fusion'
+      image: '/images/hero3.png',
+      cta: 'Shop Party Wear'
     },
     {
       title: 'Occasion Classics',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
-      image: '/images/4.jpeg',
-      cta: 'Shop Fusion'
+      image: '/images/hero4.png',
+      cta: 'Shop Collection'
     }
   ];
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -60,17 +59,17 @@ const Home = () => {
     {
       title: 'Bridal Collection',
       // description: 'Timeless elegance for your special day',
-      image: '/images/2.1.jpeg',
+      image: '/images/3.jpg',
       link: '/shop/bridal'
     },
     {
-      title: 'Occasion Wear',
+      title: 'Party Wear',
       // description: 'Perfect for celebrations and festivities',
-      image: '/images/3.jpg',
+      image: '/images/2.jpeg',
       link: '/shop/occasion'
     },
     {
-      title: 'Fusion Collection',
+      title: 'Occasion Classics',
       // description: 'Contemporary meets traditional',
       image: '/images/4.jpeg',
       link: '/shop/fusion'
@@ -232,46 +231,46 @@ const Home = () => {
       </section>
 
 
-    {/* Designer Quote */}
-<section className="relative py-8 bg-gradient-to-br from-teal-50 via-white to-teal-100 overflow-hidden">
-  {/* Decorative background (pattern.svg should be inside /public) */}
-  <div className="absolute inset-0 opacity-10 bg-[url('/pattern.svg')] bg-center bg-cover" />
+      {/* Designer Quote */}
+      <section className="relative py-8 bg-gradient-to-br from-teal-50 via-white to-teal-100 overflow-hidden">
+        {/* Decorative background (pattern.svg should be inside /public) */}
+        <div className="absolute inset-0 opacity-10 bg-[url('/pattern.svg')] bg-center bg-cover" />
 
-  <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    {/* Icon animation */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <Quote className="h-12 w-12 text-yellow-500 mx-auto mb-6" />
-    </motion.div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Icon animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <Quote className="h-12 w-12 text-yellow-500 mx-auto mb-6" />
+          </motion.div>
 
-    {/* Quote animation */}
-    <motion.blockquote
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, delay: 0.2 }}
-      viewport={{ once: true }}
-      className="text-2xl md:text-3xl font-serif text-yellow-600 mb-6 leading-relaxed"
-    >
-      "Every thread tells a story, every pattern carries the wisdom of generations,
-      and every garment represents our commitment to keeping the traditions of Assam alive."
-    </motion.blockquote>
+          {/* Quote animation */}
+          <motion.blockquote
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-2xl md:text-3xl font-serif text-yellow-600 mb-6 leading-relaxed"
+          >
+            "Every thread tells a story, every pattern carries the wisdom of generations,
+            and every garment represents our commitment to keeping the traditions of Assam alive."
+          </motion.blockquote>
 
-    {/* Author animation */}
-    <motion.cite
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1, delay: 0.6 }}
-      viewport={{ once: true }}
-      className="text-yellow-700 font-semibold block"
-    >
-      — Zinku, Creative Director
-    </motion.cite>
-  </div>
-</section>
+          {/* Author animation */}
+          <motion.cite
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="text-yellow-700 font-semibold block"
+          >
+            — Zinku, Creative Director
+          </motion.cite>
+        </div>
+      </section>
 
 
       {/* New Arrivals */}
@@ -364,12 +363,12 @@ const Home = () => {
               />
             </div>
 
-            {/* a2 - Top Right Content */}
-            <div className="flex flex-col justify-center rounded-none p-12 bg-white shadow-lg h-[36rem] lg:h-[48rem]">
+            {/* a2 - Top Right Content → now teal gradient */}
+            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-tr from-white via-teal-50 to-emerald-100 shadow-lg h-[36rem] lg:h-[48rem]">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-6">
                 Celebrating Assamese Heritage
               </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 Every piece in our collection tells a story of Assam's rich cultural heritage. From the golden threads of Muga silk to the intricate patterns passed down through generations, we honor our ancestors while creating for the future.
               </p>
               <Link
@@ -381,12 +380,12 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* b1 - Bottom Left Custom Content */}
-            <div className="flex flex-col justify-center rounded-none p-12 bg-white shadow-lg h-[36rem] lg:h-[48rem]">
+            {/* b1 - Bottom Left Custom Content → now golden gradient */}
+            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-br from-white via-amber-50 to-yellow-100 shadow-lg h-[36rem] lg:h-[48rem]">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-6">
                 Customize Your Attire
               </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 Work with our designers to create a one-of-a-kind outfit that perfectly reflects your style and heritage.
               </p>
               <Link
@@ -412,6 +411,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
 
 
 
@@ -499,7 +499,7 @@ const Home = () => {
             {instagramFeed.map((image, index) => (
               <a
                 key={index}
-                href="https://instagram.com"
+                href="https://www.instagram.com/julethi_by_zinku/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative overflow-hidden rounded-lg aspect-square"
@@ -518,7 +518,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Newsletter */}
+      {/* Newsletter
       <section className="py-16 bg-teal-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
@@ -544,7 +544,7 @@ const Home = () => {
             We respect your privacy. Unsubscribe at any time.
           </p>
         </div>
-      </section>
+      </section> */}
     </div >
   );
 };

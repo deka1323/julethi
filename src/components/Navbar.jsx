@@ -111,60 +111,65 @@ const Navbar = () => {
           {/* Center Logo */}
           <div className="flex-1 flex justify-center">
             <Link to="/" className="block text-center">
-              <h1 className="text-xl md:text-2xl font-serif text-white font-bold">Julethi</h1>
-              <p className="text-xs text-yellow-300 tracking-wide">by Zinku</p>
+              <img
+                src="/images/logonavbar.png" // 🔹 replace this with your actual logo path
+                alt="Julethi by Zinku"
+                className="h-10 md:h-14 object-contain mx-auto" // 🔹 adjust height as needed
+              />
             </Link>
           </div>
 
           {/* Right Navigation */}
-          <div className="hidden md:flex items-center space-x-3 flex-1 justify-end">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-yellow-300 transition-colors duration-200"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-yellow-300 transition-colors duration-200"
-            >
-              <Facebook className="h-4 w-4" />
-            </a>
+<div className="hidden md:flex items-center space-x-4 flex-1 justify-end">
+  {/* Social Icons */}
+  <a
+    href="https://www.instagram.com/julethi_by_zinku"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-white hover:text-yellow-300 transition-colors duration-200 flex items-center"
+  >
+    <Instagram className="h-5 w-5" />
+  </a>
+  <a
+    href="https://www.facebook.com/zinkumk/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-white hover:text-yellow-300 transition-colors duration-200 flex items-center"
+  >
+    <Facebook className="h-5 w-5" />
+  </a>
 
-            {/* Search */}
-            <div className="relative">
-              {isSearchOpen ? (
-                <form onSubmit={handleSearch} className="flex items-center">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="w-40 px-3 py-1 text-sm border-none rounded-full bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-300"
-                    autoFocus
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setIsSearchOpen(false)}
-                    className="ml-2 text-white hover:text-yellow-300"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </form>
-              ) : (
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="text-white hover:text-yellow-300 transition-colors duration-200"
-                >
-                  <Search className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          </div>
+  {/* Search */}
+  <div className="relative flex items-center">
+    {isSearchOpen ? (
+      <form onSubmit={handleSearch} className="flex items-center">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search..."
+          className="w-40 px-3 py-1 text-sm border-none rounded-full bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          autoFocus
+        />
+        <button
+          type="button"
+          onClick={() => setIsSearchOpen(false)}
+          className="ml-2 text-white hover:text-yellow-300 flex items-center"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </form>
+    ) : (
+      <button
+        onClick={() => setIsSearchOpen(true)}
+        className="text-white hover:text-yellow-300 transition-colors duration-200 flex items-center"
+      >
+        <Search className="h-5 w-5" />
+      </button>
+    )}
+  </div>
+</div>
+
 
           {/* Mobile menu button */}
           <div className="md:hidden">
