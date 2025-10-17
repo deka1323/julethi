@@ -25,19 +25,19 @@ const Home = () => {
       title: 'Bridal Collection',
       // subtitle: 'Exquisite Muga silk ensembles for your most precious moments',
       image: '/images/hero2.png',
-      cta: 'Shop Bridal Wear'
+      cta: 'Explore Collection'
     },
     {
       title: 'Party Wear Perfection',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
       image: '/images/hero3.png',
-      cta: 'Shop Party Wear'
+      cta: 'Explore Collection'
     },
     {
       title: 'Occasion Classics',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
       image: '/images/hero4.png',
-      cta: 'Shop Collection'
+      cta: 'Explore Collection'
     }
   ];
   useEffect(() => {
@@ -63,13 +63,13 @@ const Home = () => {
       link: '/shop/bridal'
     },
     {
-      title: 'Party Wear',
+      title: 'Occasion Classics',
       // description: 'Perfect for celebrations and festivities',
       image: '/images/2.jpeg',
       link: '/shop/occasion'
     },
     {
-      title: 'Occasion Classics',
+      title: 'Party Wear',
       // description: 'Contemporary meets traditional',
       image: '/images/4.jpeg',
       link: '/shop/fusion'
@@ -220,7 +220,7 @@ const Home = () => {
                   <h3 className="text-2xl font-serif font-bold mb-3">{collection.title}</h3>
                   <p className="text-base opacity-90 mb-5">{collection.description}</p>
                   <span className="inline-flex items-center text-yellow-300 font-semibold">
-                    Shop Now
+                    Shop
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </span>
                 </div>
@@ -388,13 +388,16 @@ const Home = () => {
               <p className="text-gray-700 mb-6 leading-relaxed">
                 Work with our designers to create a one-of-a-kind outfit that perfectly reflects your style and heritage.
               </p>
-              <Link
-                to="/contact"
-                className="inline-flex items-center bg-yellow-400 text-teal-900 px-6 py-3 rounded-none font-semibold hover:bg-yellow-300 transition-colors"
-              >
-                Contact Us
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              <a
+  href="https://wa.me/917002772312?text=Hey,%20I%20am%20interested%20in%20booking%20an%20appointment%20for%20a%20personal%20consultation.%20Please%20share%20the%20available%20slots."
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center bg-yellow-400 text-teal-900 px-6 py-3 rounded-none font-semibold hover:bg-yellow-300 transition-colors"
+>
+  Schedule an Appointment
+  <ArrowRight className="ml-2 h-5 w-5" />
+</a>
+
             </div>
 
             {/* b2 - Bottom Right Video */}
@@ -416,46 +419,62 @@ const Home = () => {
 
 
       {/* The Spotlight */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
-              The Spotlight
-            </h2>
-            <p className="text-lg text-gray-600">
-              Photoshoots and celebrities wearing our collections
-            </p>
-          </div>
+<section className="py-16 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+        The Spotlight
+      </h2>
+      <p className="text-lg text-gray-600 italic">
+        Celebrities and style icons adorned in our collections
+      </p>
+    </div>
 
-          <Swiper
-            modules={[Navigation]}
-            navigation
-            spaceBetween={24}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="px-4 sm:px-6 lg:px-8"
-          >
-            {spotlightItems.map((item) => (
-              <SwiperSlide key={item.id}>
-                <div className="group cursor-pointer overflow-hidden shadow-lg rounded-none">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="p-4 bg-white">
-                    <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
-                  </div>
+    <Swiper
+      modules={[Navigation]}
+      navigation
+      spaceBetween={24}
+      slidesPerView={1}
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+      className="px-4 sm:px-6 lg:px-8"
+    >
+      {spotlightItems.map((item) => (
+        <SwiperSlide key={item.id}>
+          <div className="group cursor-pointer overflow-hidden shadow-lg rounded-none">
+            <div className="relative">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-[30rem] object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+
+              {/* Optional overlay text inside photo */}
+              {item.text && (
+                <div className="absolute bottom-4 left-4 bg-black/40 text-white italic text-sm md:text-base p-2 rounded-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  {item.text}
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </section>
+              )}
+            </div>
+
+            {/* Cream name box (reduced width) */}
+            <div className="p-3 bg-[#FFF9E6]">
+  <h3 className="text-lg font-serif italic font-medium text-gray-700 text-center">
+    {item.name}
+  </h3>
+</div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+</section>
+
+
+
 
 
       {/* Artisan Story */}
@@ -468,8 +487,8 @@ const Home = () => {
                 <blockquote className="text-xl md:text-2xl font-serif mb-6 leading-relaxed">
                   "When I weave, I don't just create fabric. I weave dreams, stories, and the hopes of generations into every thread."
                 </blockquote>
-                <cite className="text-yellow-300 font-semibold">— Kamala Devi, Master Weaver</cite>
-                <p className="text-teal-200 text-sm mt-2">40 years of weaving excellence</p>
+                <cite className="text-yellow-300 font-semibold">— Rita Devi, Master Weaver</cite>
+                <p className="text-teal-200 text-sm mt-2">20 years of weaving excellence</p>
               </div>
               <div className="relative">
                 <img
@@ -491,8 +510,16 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
-              @JulethiByZinku
-            </h2>
+  <a
+    href="https://www.instagram.com/julethi_by_zinku"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-yellow-600 transition-colors duration-300"
+  >
+    @julethi_by_zinku
+  </a>
+</h2>
+
             <p className="text-lg text-gray-600">Follow us for behind-the-scenes and style inspiration</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

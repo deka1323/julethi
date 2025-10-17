@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import ProductDetail from './pages/ProductDetail';
 import WhatsAppButton from './components/WhatsAppButton';
+import ScrollToTop from './components/ScrollToTop'; // ✅ added
 
 function Layout() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function Layout() {
 function App() {
   return (
     <Router>
+      <ScrollToTop /> {/* ✅ Scrolls to top on route change */}
       <Layout />
     </Router>
   );

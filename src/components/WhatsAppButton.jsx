@@ -6,11 +6,11 @@ const WhatsAppButton = () => {
   const [showWelcome, setShowWelcome] = useState(true);
 
   // WhatsApp business number (replace with actual number)
-  const whatsappNumber = '+919876543210';
+  const whatsappNumber = '+917002772312';
 
   const handleWhatsAppClick = () => {
     const currentUrl = window.location.href;
-    const message = `Hi! I'm interested in your collection. I'm currently viewing: ${currentUrl}\n\nHow can you help me?`;
+    const message = `Hi! I'm interested in your collection and would like to know more about your designs.\nI'm currently viewing: ${currentUrl}`;
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     setShowPopup(false);
