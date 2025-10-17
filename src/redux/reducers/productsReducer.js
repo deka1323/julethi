@@ -134,10 +134,11 @@ const initialProducts = [
 ];
 
 const initialState = {
-  products: initialProducts,
+  products: [],
   loading: false,
   error: null
 };
+
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {

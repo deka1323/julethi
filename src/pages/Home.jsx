@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAllProducts } from '../redux/actions/productActions';
 import { ArrowRight, Star, Instagram, Heart, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,11 +9,17 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-
 const Home = () => {
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  const products = useSelector((state) => state.products.products);
-  const newArrivalsProducts = products.filter((p) => p.isNewArrival).slice(0, 4);
+  const newArrivalsProducts = products?.filter((p) => p.isNewArrival).slice(0, 4);
+
 
   const heroSlides = [
     {
@@ -76,33 +83,6 @@ const Home = () => {
     }
   ];
 
-
-  const bestSellers = [
-    {
-      id: 1,
-      name: 'Classic Muga Silk Mekhela',
-      price: '₹55,000',
-      image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg',
-      rating: 5,
-      reviews: 24
-    },
-    {
-      id: 2,
-      name: 'Handwoven Eri Silk Saree',
-      price: '₹35,000',
-      image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg',
-      rating: 5,
-      reviews: 18
-    },
-    {
-      id: 3,
-      name: 'Designer Lehenga Set',
-      price: '₹42,000',
-      image: 'https://images.pexels.com/photos/1721558/pexels-photo-1721558.jpeg',
-      rating: 4,
-      reviews: 31
-    }
-  ];
 
   const instagramFeed = [
     '/images/1.jpeg',
