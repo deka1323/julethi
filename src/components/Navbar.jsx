@@ -19,10 +19,9 @@ const Navbar = () => {
   }, []);
 
   const linkClass = (path) =>
-    `text-sm transition-colors duration-200 ${
-      location.pathname === path
-        ? 'text-yellow-400 font-medium'
-        : 'text-white hover:text-yellow-300'
+    `text-sm transition-colors duration-200 ${location.pathname === path
+      ? 'text-yellow-400 font-medium'
+      : 'text-white hover:text-yellow-300'
     }`;
 
   const handleSearch = (e) => {
@@ -46,9 +45,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-teal-900/95 backdrop-blur-md shadow-lg' : 'bg-teal-900'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-teal-900/95 backdrop-blur-md shadow-lg' : 'bg-teal-900'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 relative">
@@ -72,31 +70,28 @@ const Navbar = () => {
                 <div className="absolute top-full left-0 bg-white shadow-xl rounded-lg mt-1 py-2 w-48 border border-emerald-100">
                   <Link
                     to="/shop/bridal"
-                    className={`block px-4 py-2 text-sm transition-colors ${
-                      location.pathname === '/shop/bridal'
+                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/bridal'
                         ? 'bg-yellow-50 text-yellow-700 font-medium'
                         : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
-                    }`}
+                      }`}
                   >
                     Bridal Wear
                   </Link>
                   <Link
                     to="/shop/occasion"
-                    className={`block px-4 py-2 text-sm transition-colors ${
-                      location.pathname === '/shop/occasion'
+                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/occasion'
                         ? 'bg-yellow-50 text-yellow-700 font-medium'
                         : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
-                    }`}
+                      }`}
                   >
                     Occasion Wear
                   </Link>
                   <Link
                     to="/shop/fusion"
-                    className={`block px-4 py-2 text-sm transition-colors ${
-                      location.pathname === '/shop/fusion'
+                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/fusion'
                         ? 'bg-yellow-50 text-yellow-700 font-medium'
                         : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
-                    }`}
+                      }`}
                   >
                     Party Wear
                   </Link>
@@ -118,8 +113,9 @@ const Navbar = () => {
               <img
                 src="/images/logonavbar.png"
                 alt="Julethi by Zinku"
-                className="h-10 md:h-14 object-contain mx-auto"
+                className="h-14 md:h-14 object-contain mx-auto"
               />
+
             </Link>
           </div>
 
@@ -224,10 +220,9 @@ const Navbar = () => {
                 <Link
                   key={i}
                   to={path}
-                  className={`block px-3 py-2 text-sm ${
-                    location.pathname === path ? 'text-yellow-400 font-medium' : 'text-white hover:text-yellow-300'
-                  } ${path.includes('/shop/') ? 'pl-6' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)} 
+                  className={`block px-3 py-2 text-sm ${location.pathname === path ? 'text-yellow-400 font-medium' : 'text-white hover:text-yellow-300'
+                    } ${path.includes('/shop/') ? 'pl-6' : ''}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {path === '/' && 'Home'}
                   {path === '/shop' && 'Shop'}

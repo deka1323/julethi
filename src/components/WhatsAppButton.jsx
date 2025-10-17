@@ -27,15 +27,16 @@ const WhatsAppButton = () => {
       {/* Floating WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-float-y">
         <button
-          onClick={() => setShowPopup(true)}
-          className="w-16 h-16 rounded-full bg-white shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-110 overflow-hidden"
-        >
-          <img
-            src="/images/whatsapp.png"
-            alt="WhatsApp"
-            className="w-full h-full object-cover"
-          />
-        </button>
+  onClick={() => setShowPopup(true)}
+  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-110 overflow-hidden"
+>
+  <img
+    src="/images/whatsapp.png"
+    alt="WhatsApp"
+    className="w-full h-full object-cover"
+  />
+</button>
+
 
         {/* Welcome bubble on landing */}
         {showWelcome && (
