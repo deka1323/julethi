@@ -70,8 +70,8 @@ const Shop = () => {
             {searchQuery
               ? `Found ${filteredProducts.length} items`
               : showNewArrivalsOnly
-              ? 'Discover our latest additions'
-              : 'Discover our complete collection of handcrafted Assamese couture'
+                ? 'Discover our latest additions'
+                : 'Discover our complete collection of handcrafted Assamese couture'
             }
           </p>
         </div>
@@ -81,11 +81,10 @@ const Shop = () => {
           <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
             <button
               onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showNewArrivalsOnly
-                  ? 'bg-rose-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
-              }`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${showNewArrivalsOnly
+                ? 'bg-rose-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
+                }`}
             >
               {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
             </button>
@@ -95,11 +94,10 @@ const Shop = () => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category.id
-                    ? 'bg-teal-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-teal-50 hover:text-teal-600'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                  ? 'bg-teal-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                  }`}
               >
                 {category.name} ({category.count})
               </button>
@@ -153,62 +151,95 @@ const Shop = () => {
         )}
 
         {/* Products Grid */}
-{!loading && (
-  <div className={`grid gap-6 justify-center ${viewMode === 'grid'
-    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-    : 'grid-cols-1'
-  }`}>
-    {filteredProducts.map((product) => (
-      <Link
-        to={`/product/${product.id}`}
-        key={product.id}
-        className={`group cursor-pointer ${
-          viewMode === 'list'
-            ? 'flex flex-col sm:flex-row space-x-0 sm:space-x-6'
-            : 'w-full max-w-[280px] sm:max-w-full mx-auto' // mobile width small
-        }`}
-      >
-        <div className={`relative overflow-hidden ${
-          viewMode === 'list'
-            ? 'w-full sm:w-48 h-60 sm:h-48 flex-shrink-0 mb-2 sm:mb-0' // increased mobile height
-            : 'h-80 sm:h-80 mb-4' // slightly taller for mobile grid view
-        }`}>
-          {product.isNewArrival && (
-            <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
-              New
-            </span>
-          )}
-          <img
-            src={product.imgUrl}
-            alt={product.name}
-            className={`w-full object-cover group-hover:scale-110 transition-transform duration-500 ${
-              viewMode === 'list' ? 'h-60 sm:h-48' : 'h-80 sm:h-80'
-            }`}
-          />
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
-              <Heart className="h-5 w-5 text-gray-600" />
-            </button>
-          </div>
-        </div>
+        {!loading && (
+          <div
+            className={`grid gap-6 justify-center ${viewMode === "grid"
+              ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-4"
+              : "grid-cols-1"
+              }`}
+          >
+            {filteredProducts.map((product) => {
+              const mainImage =
+                product.imageUrls && product.imageUrls.length > 0
+                  ? product.imageUrls[0]
+                  : product.imgUrl;
+              console.log("mainImage : ", mainImage)
+              const hoverImage =
+                product.imageUrls && product.imageUrls.length > 1
+                  ? product.imageUrls[1]
+                  : mainImage;
+              console.log("hoverImage :", hoverImage)
 
-        <div className={viewMode === 'list' ? 'flex-1 mt-2 sm:mt-0' : ''}>
-          <h3 className="text-sm text-gray-700 mb-2">{product.name}</h3>
-          <div className="flex items-center space-x-2">
-            <span className="text-teal-600 text-sm">
-              ₹{product.price.toLocaleString('en-IN')}
-            </span>
+              return (
+                <Link
+                  to={`/product/${product.id}`}
+                  key={product.id}
+                  className={`group cursor-pointer ${viewMode === "list"
+                    ? "flex flex-col sm:flex-row space-x-0 sm:space-x-6"
+                    : "w-full max-w-[280px] sm:max-w-full mx-auto"
+                    }`}
+                >
+                  {/* Image Container */}
+                  <div
+                    className={`relative overflow-hidden rounded-2xl shadow-sm ${viewMode === "list"
+                      ? "w-full sm:w-48 h-60 sm:h-48 flex-shrink-0 mb-2 sm:mb-0"
+                      : "h-80 sm:h-80 mb-4"
+                      }`}
+                  >
+                    {product.isNewArrival && (
+                      <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
+                        New
+                      </span>
+                    )}
+
+                    {/* Image swap on hover */}
+                    <img
+                      src={mainImage}
+                      alt={product.name}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${viewMode === "list"
+                        ? "h-60 sm:h-48"
+                        : "h-80 sm:h-80"
+                        } group-hover:opacity-0`}
+                    />
+                    <img
+                      src={hoverImage}
+                      alt={product.name}
+                      className={`absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${viewMode === "list"
+                        ? "h-60 sm:h-48"
+                        : "h-80 sm:h-80"
+                        }`}
+                    />
+
+                    {/* Wishlist Icon */}
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
+                        <Heart className="h-5 w-5 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div className={viewMode === "list" ? "flex-1 mt-2 sm:mt-0" : ""}>
+                    <h3 className="text-sm text-gray-800 font-medium mb-2 line-clamp-1">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-teal-700 text-sm font-semibold">
+                        ₹{product.price.toLocaleString("en-IN")}
+                      </span>
+                    </div>
+                    {viewMode === "list" && (
+                      <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                        {product.description}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
-          {viewMode === 'list' && (
-            <p className="text-gray-600 text-sm mt-2 line-clamp-2">
-              {product.description}
-            </p>
-          )}
-        </div>
-      </Link>
-    ))}
-  </div>
-)}
+        )}
+
 
 
         {/* No results */}
