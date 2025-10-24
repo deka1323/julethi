@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import ImageCarousel from '../components/ImageCarousel';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -260,33 +261,42 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
               New Arrivals
             </h2>
-            {/* <p className="text-lg text-gray-600">Fresh designs that capture the essence of modern Assamese couture</p> */}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {newArrivalsProducts.map((item) => (
-              <Link key={item.id} to={`/product/${item.id}`} className="group cursor-pointer">
+              <Link
+                key={item.id}
+                to={`/product/${item.id}`}
+                className="group cursor-pointer"
+              >
                 <div className="relative overflow-hidden rounded-none mb-4">
                   {item.isNewArrival && (
                     <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
                       New
                     </span>
                   )}
-                  <img
-                    src={item.imgUrl}
-                    alt={item.name}
-                    className="w-full h-[28rem] object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+
+                  {/* Image Carousel (multiple images supported) */}
+                  <ImageCarousel images={item.images || [item.imgUrl]} />
+
+                  {/* Wishlist Icon */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                     <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
                       <Heart className="h-5 w-5 text-gray-600" />
                     </button>
                   </div>
                 </div>
+
+                {/* Product Info */}
                 <h3 className="text-sm text-gray-700 mb-2">{item.name}</h3>
-                <p className="text-teal-600 text-sm">₹{item.price.toLocaleString('en-IN')}</p>
+                <p className="text-teal-600 text-sm">
+                  ₹{item.price.toLocaleString('en-IN')}
+                </p>
               </Link>
             ))}
           </div>
+
           <div className="text-center mt-8">
             <Link
               to="/shop?filter=new"
@@ -298,6 +308,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
 
       {/* Heritage Story
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-orange-50">
@@ -369,14 +380,14 @@ const Home = () => {
                 Work with our designers to create a one-of-a-kind outfit that perfectly reflects your style and heritage.
               </p>
               <a
-  href="https://wa.me/917002772312?text=Hey,%20I%20am%20interested%20in%20booking%20an%20appointment%20for%20a%20personal%20consultation.%20Please%20share%20the%20available%20slots."
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-flex items-center bg-yellow-400 text-teal-900 px-6 py-3 rounded-none font-semibold hover:bg-yellow-300 transition-colors"
->
-  Schedule an Appointment
-  <ArrowRight className="ml-2 h-5 w-5" />
-</a>
+                href="https://wa.me/917002772312?text=Hey,%20I%20am%20interested%20in%20booking%20an%20appointment%20for%20a%20personal%20consultation.%20Please%20share%20the%20available%20slots."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center bg-yellow-400 text-teal-900 px-6 py-3 rounded-none font-semibold hover:bg-yellow-300 transition-colors"
+              >
+                Schedule an Appointment
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
 
             </div>
 
@@ -399,59 +410,59 @@ const Home = () => {
 
 
       {/* The Spotlight */}
-<section className="py-16 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-12">
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
-        The Spotlight
-      </h2>
-      <p className="text-lg text-gray-600 italic">
-        Celebrities and style icons adorned in our collections
-      </p>
-    </div>
-
-    <Swiper
-      modules={[Navigation]}
-      navigation
-      spaceBetween={24}
-      slidesPerView={1}
-      breakpoints={{
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      }}
-      className="px-4 sm:px-6 lg:px-8"
-    >
-      {spotlightItems.map((item) => (
-        <SwiperSlide key={item.id}>
-          <div className="group cursor-pointer overflow-hidden shadow-lg rounded-none">
-            <div className="relative">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-[30rem] object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-
-              {/* Optional overlay text inside photo */}
-              {item.text && (
-                <div className="absolute bottom-4 left-4 bg-black/40 text-white italic text-sm md:text-base p-2 rounded-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {item.text}
-                </div>
-              )}
-            </div>
-
-            {/* Cream name box (reduced width) */}
-            <div className="p-3 bg-[#FFF9E6]">
-  <h3 className="text-lg font-serif italic font-medium text-gray-700 text-center">
-    {item.name}
-  </h3>
-</div>
+      <section className="py-16 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+              The Spotlight
+            </h2>
+            <p className="text-lg text-gray-600 italic">
+              Celebrities and style icons adorned in our collections
+            </p>
           </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  </div>
-</section>
+
+          <Swiper
+            modules={[Navigation]}
+            navigation
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="px-4 sm:px-6 lg:px-8"
+          >
+            {spotlightItems.map((item) => (
+              <SwiperSlide key={item.id}>
+                <div className="group cursor-pointer overflow-hidden shadow-lg rounded-none">
+                  <div className="relative">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-[30rem] object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+
+                    {/* Optional overlay text inside photo */}
+                    {item.text && (
+                      <div className="absolute bottom-4 left-4 bg-black/40 text-white italic text-sm md:text-base p-2 rounded-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        {item.text}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Cream name box (reduced width) */}
+                  <div className="p-3 bg-[#FFF9E6]">
+                    <h3 className="text-lg font-serif italic font-medium text-gray-700 text-center">
+                      {item.name}
+                    </h3>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
 
 
 
@@ -490,15 +501,15 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
-  <a
-    href="https://www.instagram.com/julethi_by_zinku"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-yellow-600 transition-colors duration-300"
-  >
-    @julethi_by_zinku
-  </a>
-</h2>
+              <a
+                href="https://www.instagram.com/julethi_by_zinku"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-yellow-600 transition-colors duration-300"
+              >
+                @julethi_by_zinku
+              </a>
+            </h2>
 
             <p className="text-lg text-gray-600">Follow us for behind-the-scenes and style inspiration</p>
           </div>

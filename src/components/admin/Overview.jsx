@@ -6,8 +6,7 @@ import { fetchAllProducts } from '../../redux/actions/productActions';
 
 export default function Overview() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const loading = useSelector((state) => state.products.loading);
+  const { products, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchAllProducts());
@@ -62,43 +61,51 @@ export default function Overview() {
     { name: 'Occasion Wear', count: occasionCount, color: 'bg-teal-500', percentage: ((occasionCount / totalProducts) * 100).toFixed(0) },
   ];
 
-  const recentProducts = products
+  const recentProducts = [...products]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-slate-600">Loading dashboard...</p>
+        <p className="text-slate-500 text-sm tracking-wide">Loading dashboard...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fadeIn">
+      {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-slate-800">Dashboard Overview</h1>
-        <p className="text-slate-600 mt-1">Welcome back! Here's your boutique summary.</p>
+        <h1 className="text-xl font-semibold text-slate-800 tracking-tight">
+          Dashboard Overview
+        </h1>
+        <p className="text-sm text-slate-500 mt-1">
+          Welcome back! Here’s your boutique summary.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <motion.div
               key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+              transition={{ delay: index * 0.08 }}
+              className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-600 mb-1">{stat.title}</p>
-                  <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                  <p className="text-xs text-slate-500 mb-1 font-medium">{stat.title}</p>
+                  <p className="text-lg font-semibold text-slate-800 leading-tight">
+                    {stat.value}
+                  </p>
                 </div>
-                <div className={`${stat.bgColor} p-3 rounded-xl`}>
-                  <Icon className={`w-6 h-6 ${stat.textColor}`} />
+                <div className={`${stat.bgColor} p-2.5 rounded-xl`}>
+                  <Icon className={`w-4 h-4 ${stat.textColor}`} />
                 </div>
               </div>
             </motion.div>
@@ -106,17 +113,25 @@ export default function Overview() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Category Distribution</h3>
-          <div className="space-y-4">
+      {/* Lower Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Category Distribution */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+          <h3 className="text-sm font-semibold text-slate-700 mb-3 tracking-tight">
+            Category Distribution
+          </h3>
+          <div className="space-y-3">
             {categoryData.map((category) => (
               <div key={category.name}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-slate-700">{category.name}</span>
-                  <span className="text-sm text-slate-600">{category.count} products ({category.percentage}%)</span>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium text-slate-600">
+                    {category.name}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {category.count} ({category.percentage}%)
+                  </span>
                 </div>
-                <div className="w-full bg-slate-200 rounded-full h-2">
+                <div className="w-full bg-slate-100 rounded-full h-2">
                   <div
                     className={`${category.color} h-2 rounded-full transition-all duration-500`}
                     style={{ width: `${category.percentage}%` }}
@@ -127,28 +142,47 @@ export default function Overview() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Recent Products</h3>
-          <div className="space-y-3">
+        {/* Recent Products */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+          <h3 className="text-sm font-semibold text-slate-700 mb-3 tracking-tight">
+            Recent Products
+          </h3>
+          <div className="space-y-2.5">
             {recentProducts.map((product) => (
-              <div key={product.id} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition">
+              <div
+                key={product.id}
+                className="flex items-center space-x-3 p-2.5 rounded-lg hover:bg-slate-50 transition"
+              >
                 <img
-                  src={product.imgUrl}
+                  src={product.images[0]}
                   alt={product.name}
-                  className="w-12 h-12 rounded-lg object-cover"
+                  className="w-10 h-10 rounded-lg object-cover border border-slate-200"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-800 truncate">{product.name}</p>
-                  <p className="text-xs text-slate-500 capitalize">{product.category}</p>
+                  <p className="text-xs font-medium text-slate-800 truncate">
+                    {product.name}
+                  </p>
+                  <p className="text-[11px] text-slate-500 capitalize">
+                    {product.category}
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-semibold text-slate-800">₹{product.price.toLocaleString('en-IN')}</p>
+                  <p className="text-xs font-semibold text-slate-800">
+                    ₹{product.price.toLocaleString('en-IN')}
+                  </p>
                   {product.isNewArrival && (
-                    <span className="text-xs text-rose-600 font-medium">New</span>
+                    <span className="text-[10px] text-rose-600 font-medium">
+                      New
+                    </span>
                   )}
                 </div>
               </div>
             ))}
+            {recentProducts.length === 0 && (
+              <p className="text-xs text-slate-500 text-center py-4">
+                No products added yet.
+              </p>
+            )}
           </div>
         </div>
       </div>

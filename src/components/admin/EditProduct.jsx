@@ -10,7 +10,7 @@ export default function EditProduct() {
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.products);
   const product = products.find((p) => p.id === id || p.productId === id);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -50,22 +50,17 @@ export default function EditProduct() {
     setLoading(true);
     setError('');
 
-    const productData = {
-      name: formData.name,
-      imgUrl: formData.imgUrl,
-      price: parseInt(formData.price),
-      fabric: formData.fabric,
-      category: formData.category,
-      description: formData.description,
-      isNewArrival: formData.isNewArrival,
-    };
-
     try {
       const productId = product.productId || product.id;
-      const response = await dispatch(updateProduct(productId, productData));
-      if (response.success) {
-        navigate('/admin/products');
-      } else {
+      const response = await dispatch(
+        updateProduct(productId, {
+          ...formData,
+          price: parseInt(formData.price),
+        })
+      );
+
+      if (response.success) navigate('/admin/products');
+      else {
         setError(response.error || 'Failed to update product');
         setLoading(false);
       }
@@ -77,39 +72,45 @@ export default function EditProduct() {
 
   if (!product) {
     return (
-      <div className="text-center py-12">
-        <p className="text-slate-600">Product not found</p>
+      <div className="text-center py-20">
+        <p className="text-slate-500 text-sm">Product not found.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">Edit Product</h1>
-          <p className="text-slate-600 mt-1">Update product details</p>
+          <h1 className="text-xl font-semibold text-slate-800 tracking-tight">
+            Edit Product
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Make updates to product details
+          </p>
         </div>
         <button
           onClick={() => navigate('/admin/products')}
-          className="flex items-center space-x-2 text-slate-600 hover:text-slate-800"
+          className="flex items-center text-slate-600 hover:text-slate-800 transition text-sm font-medium"
         >
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back</span>
+          <ArrowLeft className="w-4 h-4 mr-1" />
+          Back
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      {/* Form Container */}
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800 text-sm">{error}</p>
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+            {error}
           </div>
         )}
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <form onSubmit={handleSubmit} className="space-y-5 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-slate-600 mb-1.5 font-medium">
                 Product Name
               </label>
               <input
@@ -118,13 +119,13 @@ export default function EditProduct() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 placeholder-slate-400 text-sm"
                 placeholder="Enter product name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-slate-600 mb-1.5 font-medium">
                 Category
               </label>
               <select
@@ -132,7 +133,7 @@ export default function EditProduct() {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 text-sm"
               >
                 <option value="">Select Category</option>
                 <option value="bridal">Bridal Wear</option>
@@ -142,9 +143,9 @@ export default function EditProduct() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-slate-600 mb-1.5 font-medium">
                 Price (₹)
               </label>
               <input
@@ -154,13 +155,13 @@ export default function EditProduct() {
                 onChange={handleChange}
                 required
                 min="0"
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 placeholder-slate-400 text-sm"
                 placeholder="Enter price"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-slate-600 mb-1.5 font-medium">
                 Fabric
               </label>
               <input
@@ -169,14 +170,14 @@ export default function EditProduct() {
                 value={formData.fabric}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 placeholder-slate-400 text-sm"
                 placeholder="e.g., Silk, Cotton, Georgette"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-slate-600 mb-1.5 font-medium">
               Image URL
             </label>
             <input
@@ -185,52 +186,52 @@ export default function EditProduct() {
               value={formData.imgUrl}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 placeholder-slate-400 text-sm"
               placeholder="https://example.com/image.jpg"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-slate-600 mb-1.5 font-medium">
               Description
             </label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
+              rows={3}
               required
-              rows={4}
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none text-slate-700 placeholder-slate-400 text-sm"
               placeholder="Enter product description"
             />
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2">
             <input
               type="checkbox"
               name="isNewArrival"
               checked={formData.isNewArrival}
               onChange={handleChange}
-              className="w-4 h-4 text-yellow-500 border-slate-300 rounded focus:ring-yellow-500"
+              className="w-4 h-4 text-yellow-500 border-slate-300 rounded focus:ring-yellow-400"
             />
-            <label className="ml-2 text-sm text-slate-700">
+            <label className="text-slate-600 font-medium text-sm">
               Mark as New Arrival
             </label>
           </div>
 
-          <div className="flex space-x-4">
+          <div className="flex space-x-3 pt-2">
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-yellow-500 text-slate-900 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-yellow-400 text-slate-900 py-2.5 rounded-lg font-medium hover:bg-yellow-500 transition flex items-center justify-center space-x-2 disabled:opacity-50 text-sm"
             >
-              <Save className="w-5 h-5" />
+              <Save className="w-4 h-4" />
               <span>{loading ? 'Updating...' : 'Update Product'}</span>
             </button>
             <button
               type="button"
               onClick={() => navigate('/admin/products')}
-              className="px-6 py-3 border border-slate-300 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition"
+              className="px-5 py-2.5 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition text-sm"
             >
               Cancel
             </button>

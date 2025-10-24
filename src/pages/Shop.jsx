@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Filter, Grid, List, Heart } from 'lucide-react';
 import { fetchAllProducts } from '../redux/actions/productActions';
+import ImageCarousel from '../components/ImageCarousel';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -160,13 +161,13 @@ const Shop = () => {
           >
             {filteredProducts.map((product) => {
               const mainImage =
-                product.imageUrls && product.imageUrls.length > 0
-                  ? product.imageUrls[0]
+                product.images && product.images.length > 0
+                  ? product.images[0]
                   : product.imgUrl;
               console.log("mainImage : ", mainImage)
               const hoverImage =
-                product.imageUrls && product.imageUrls.length > 1
-                  ? product.imageUrls[1]
+                product.images && product.images.length > 1
+                  ? product.images[1]
                   : mainImage;
               console.log("hoverImage :", hoverImage)
 
@@ -180,8 +181,9 @@ const Shop = () => {
                     }`}
                 >
                   {/* Image Container */}
+                  {/* Image Carousel Container */}
                   <div
-                    className={`relative overflow-hidden rounded-2xl shadow-sm ${viewMode === "list"
+                    className={`relative overflow-hidden rounded-2xl shadow-sm group ${viewMode === "list"
                       ? "w-full sm:w-48 h-60 sm:h-48 flex-shrink-0 mb-2 sm:mb-0"
                       : "h-80 sm:h-80 mb-4"
                       }`}
@@ -192,31 +194,18 @@ const Shop = () => {
                       </span>
                     )}
 
-                    {/* Image swap on hover */}
-                    <img
-                      src={mainImage}
-                      alt={product.name}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${viewMode === "list"
-                        ? "h-60 sm:h-48"
-                        : "h-80 sm:h-80"
-                        } group-hover:opacity-0`}
-                    />
-                    <img
-                      src={hoverImage}
-                      alt={product.name}
-                      className={`absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${viewMode === "list"
-                        ? "h-60 sm:h-48"
-                        : "h-80 sm:h-80"
-                        }`}
-                    />
+                    {/* Image Carousel */}
+                    <ImageCarousel images={product.images || [product.imgUrl]} />
 
                     {/* Wishlist Icon */}
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                       <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
                         <Heart className="h-5 w-5 text-gray-600" />
                       </button>
                     </div>
                   </div>
+
+
 
                   {/* Product Info */}
                   <div className={viewMode === "list" ? "flex-1 mt-2 sm:mt-0" : ""}>
