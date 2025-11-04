@@ -212,11 +212,26 @@ const Shop = () => {
                     <h3 className="text-sm text-gray-800 font-medium mb-2 line-clamp-1">
                       {product.name}
                     </h3>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-teal-700 text-sm font-semibold">
-                        ₹{product.price.toLocaleString("en-IN")}
-                      </span>
+                    <div className="flex items-center gap-1 mt-1">
+                      {product.discountedPrice ? (
+                        <>
+                          <span className="text-sm font-semibold text-rose-600">
+                            ₹{product.discountedPrice.toLocaleString("en-IN")}
+                          </span>
+                          <span className="text-xs text-gray-400 line-through">
+                            ₹{product.price.toLocaleString("en-IN")}
+                          </span>
+                          <span className="text-xs text-green-600 font-medium">
+                            ({Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% OFF)
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-sm font-semibold text-teal-700">
+                          ₹{product.price.toLocaleString("en-IN")}
+                        </span>
+                      )}
                     </div>
+
                     {viewMode === "list" && (
                       <p className="text-gray-600 text-sm mt-2 line-clamp-2">
                         {product.description}

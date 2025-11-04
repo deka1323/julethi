@@ -154,10 +154,46 @@ export default function ProductList() {
                       {product.description}
                     </p>
 
+
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-teal-700">
-                        ₹{product.price.toLocaleString("en-IN")}
-                      </span>
+                      <div className="flex flex-col">
+                        {product.discountedPrice ? (
+                          <>
+                            <div className="flex items-center gap-1">
+                              <span className="text-sm font-bold text-teal-700">
+                                ₹{product.discountedPrice.toLocaleString("en-IN")}
+                              </span>
+                              <span className="text-[11px] text-slate-400 line-through">
+                                ₹{product.price.toLocaleString("en-IN")}
+                              </span>
+                              <span className="text-[10px] text-green-600 font-medium">
+                                ({Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% OFF)
+                              </span>
+                            </div>
+
+                            <div className="flex space-x-1">
+                              <button
+                                onClick={() => navigate(`/admin/products/edit/${product.id}`)}
+                                className="p-1 text-blue-600 hover:bg-blue-50 rounded transition"
+                              >
+                                <Edit className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => handleDelete(product.id)}
+                                className="p-1 text-red-600 hover:bg-red-50 rounded transition"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <span className="text-sm font-bold text-teal-700">
+                            ₹{product.price.toLocaleString("en-IN")}
+                          </span>
+
+                        )}
+                      </div>
+
                       <div className="flex space-x-1">
                         <button
                           onClick={() => navigate(`/admin/products/edit/${product.id}`)}
@@ -173,6 +209,7 @@ export default function ProductList() {
                         </button>
                       </div>
                     </div>
+
                   </div>
                 </motion.div>
               );

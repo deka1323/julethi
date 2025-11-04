@@ -290,9 +290,27 @@ const Home = () => {
 
                 {/* Product Info */}
                 <h3 className="text-sm text-gray-700 mb-2">{item.name}</h3>
-                <p className="text-teal-600 text-sm">
-                  ₹{item.price.toLocaleString('en-IN')}
-                </p>
+
+                <div className="flex items-center gap-1">
+                  {item.discountedPrice ? (
+                    <>
+                      <span className="text-sm font-semibold text-rose-600">
+                        ₹{item.discountedPrice.toLocaleString('en-IN')}
+                      </span>
+                      <span className="text-xs text-gray-400 line-through">
+                        ₹{item.price.toLocaleString('en-IN')}
+                      </span>
+                      <span className="text-xs text-green-600 font-medium">
+                        ({Math.round(((item.price - item.discountedPrice) / item.price) * 100)}% OFF)
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-sm font-semibold text-teal-700">
+                      ₹{item.price.toLocaleString('en-IN')}
+                    </span>
+                  )}
+                </div>
+
               </Link>
             ))}
           </div>

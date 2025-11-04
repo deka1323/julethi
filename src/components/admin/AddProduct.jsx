@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../redux/actions/productActions";
-import { Save, ArrowLeft, GripVertical, X } from "lucide-react";
+import { Save, ArrowLeft, GripVertical, X, PlusCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -19,9 +19,16 @@ export default function AddProduct() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [productDetails, setProductDetails] = useState([
+    "Handcrafted with premium materials",
+    "Perfect for special occasions",
+    "Customization available",
+    "Dry clean only",
+  ]);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    discountedPrice: "",
     fabric: "",
     category: "",
     description: "",
@@ -61,6 +68,21 @@ export default function AddProduct() {
     setImages(reordered);
   };
 
+  const handleDetailChange = (index, value) => {
+    const updated = [...productDetails];
+    updated[index] = value;
+    setProductDetails(updated);
+  };
+
+  const handleAddDetail = () => {
+    setProductDetails([...productDetails, ""]);
+  };
+
+  const handleRemoveDetail = (index) => {
+    const updated = productDetails.filter((_, i) => i !== index);
+    setProductDetails(updated);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -98,17 +120,25 @@ export default function AddProduct() {
       );
 
       const productData = { ...formData, images: publicUrls, productId };
+      console.log("productData : ", productData)
       await dispatch(createProduct(productData));
       toast.success("✅ Product added successfully!");
 
       setFormData({
         name: "",
         price: "",
+        discountedPrice: "",
         fabric: "",
         category: "",
         description: "",
         isNewArrival: false,
       });
+      setProductDetails([
+        "Handcrafted with premium materials",
+        "Perfect for special occasions",
+        "Customization available",
+        "Dry clean only",
+      ]);
       setImages([]);
     } catch (err) {
       console.error(err);
@@ -196,6 +226,21 @@ export default function AddProduct() {
                 onChange={handleChange}
                 required
                 placeholder="Enter price"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-slate-700 focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-600 mb-1 block text-xs font-medium">
+                Discounted Price (₹)
+              </label>
+              <input
+                type="number"
+                name="discountedPrice"
+                value={formData.discountedPrice}
+                onChange={handleChange}
+                required
+                placeholder="Enter discounted price"
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg text-slate-700 focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition"
               />
             </div>
@@ -293,6 +338,44 @@ export default function AddProduct() {
               className="w-full px-3 py-2 border border-slate-300 rounded-lg text-slate-700 focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition"
             />
           </div>
+
+          <div>
+            <label className="text-slate-600 mb-2 block text-xs font-medium">
+              Product Details
+            </label>
+
+            <div className="space-y-2">
+              {productDetails.map((detail, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={detail}
+                    onChange={(e) => handleDetailChange(index, e.target.value)}
+                    placeholder="Enter product detail"
+                    className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-slate-700 focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveDetail(index)}
+                    className="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+                  >
+                    <X className="w-4 h-4 text-slate-600" />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={handleAddDetail}
+                className="flex items-center gap-1 text-yellow-600 hover:text-yellow-700 text-xs font-medium mt-1"
+              >
+                <PlusCircle className="w-4 h-4" />
+                Add More
+              </button>
+            </div>
+          </div>
+
+          {/* --- Rest of Your Fields (Price, Description, Images etc.) --- */}
+          {/* Keep your existing image upload, description, and buttons unchanged */}
 
           {/* Checkbox */}
           <div className="flex items-center space-x-2">

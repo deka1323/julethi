@@ -167,15 +167,28 @@ export default function Overview() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-semibold text-slate-800">
-                    ₹{product.price.toLocaleString('en-IN')}
-                  </p>
+                  {product.discountedPrice ? (
+                    <>
+                      <p className="text-xs font-semibold text-slate-800">
+                        ₹{product.discountedPrice.toLocaleString('en-IN')}
+                      </p>
+                      <p className="text-[11px] text-slate-400 line-through">
+                        ₹{product.price.toLocaleString('en-IN')}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-xs font-semibold text-slate-800">
+                      ₹{product.price.toLocaleString('en-IN')}
+                    </p>
+                  )}
+
                   {product.isNewArrival && (
                     <span className="text-[10px] text-rose-600 font-medium">
                       New
                     </span>
                   )}
                 </div>
+
               </div>
             ))}
             {recentProducts.length === 0 && (

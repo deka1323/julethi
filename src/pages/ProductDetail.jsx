@@ -12,6 +12,9 @@ export default function ProductDetail() {
   const products = useSelector((state) => state.products.products);
   const product = products.find((p) => p.id === id);
 
+  console.log("PRODUCTS : ", products)
+  console.log("PRODUCT : ", product)
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [currentImage, setCurrentImage] = useState(0);
@@ -218,9 +221,28 @@ export default function ProductDetail() {
               <h1 className="text-xl md:text-2xl font-semibold text-gray-800 mb-1 leading-snug">
                 {product.name}
               </h1>
-              <p className="text-lg font-semibold text-teal-700 mb-2">
-                ₹{product.price.toLocaleString("en-IN")}
-              </p>
+              <div className="flex items-baseline space-x-3 mb-3">
+                {/* MRP label + cut price */}
+                <span className="text-gray-500 text-sm">
+                  MRP{" "}
+                  <span className="line-through">
+                    ₹{product.price.toLocaleString("en-IN")}
+                  </span>
+                </span>
+
+                {/* Discounted Price */}
+                <span className="text-xl font-semibold text-gray-900">
+                  ₹{product.discountedPrice?.toLocaleString("en-IN")}
+                </span>
+
+                {/* Optional: Discount Percentage */}
+                {product.discountedPrice && product.price > product.discountedPrice && (
+                  <span className="text-sm font-medium text-green-600">
+                    ({Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% OFF)
+                  </span>
+                )}
+              </div>
+
             </div>
 
             {/* Description & Details */}
@@ -239,11 +261,12 @@ export default function ProductDetail() {
 
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 mb-1">Product Details</h3>
-                <ul className="list-disc list-inside text-gray-600 space-y-1">
-                  <li>Handcrafted with premium materials</li>
-                  <li>Perfect for special occasions</li>
-                  <li>Customization available</li>
-                  <li>Dry clean only</li>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">{product.productDetails ? (product.productDetails?.map((i) => (<li>{i}</li>))) :
+                  (<div><li>Handcrafted with premium materials Hello</li>
+                    <li>Perfect for special occasions</li>
+                    <li>Customization available</li>
+                    <li>Dry clean only</li>
+                  </div>)}
                 </ul>
               </div>
             </div>
