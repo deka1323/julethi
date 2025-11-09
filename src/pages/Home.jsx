@@ -36,7 +36,7 @@ const Home = () => {
       cta: 'Explore Collection'
     },
     {
-      title: 'Party Wear Perfection',
+      title: 'Mens Wear Collection',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
       image: '/images/hero3.png',
       cta: 'Explore Collection'
@@ -77,10 +77,10 @@ const Home = () => {
       link: '/shop/occasion'
     },
     {
-      title: 'Party Wear',
+      title: 'Mens Wear',
       // description: 'Contemporary meets traditional',
       image: '/images/4.jpeg',
-      link: '/shop/fusion'
+      link: '/shop/men'
     }
   ];
 
@@ -123,16 +123,16 @@ const Home = () => {
             />
             <div className="absolute inset-0 flex items-center justify-center text-white">
               <div className="text-center max-w-4xl mx-auto px-4 translate-y-1/2">
-                <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">
+                <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4 text-[#fff8e7]">
                   {slide.title}
                 </h1>
-                <p className="text-lg md:text-xl mb-6 text-teal-100 leading-relaxed">
+                <p className="text-lg md:text-xl mb-6 text-crimson-100 leading-relaxed">
                   {slide.subtitle}
                 </p>
                 <div className="space-x-4">
                   <Link
                     to="/shop"
-                    className="inline-flex items-center bg-yellow-400/80 text-teal-900 px-5 py-2.5 rounded-full font-medium hover:bg-yellow-400/90 transition-all duration-300 transform hover:scale-105"
+                    className="inline-flex items-center bg-[#fff8e7]/80 text-crimson-900 px-5 py-2.5 rounded-full font-medium hover:bg-crimson-600/90 transition-all duration-300 transform hover:scale-105"
                   >
                     {slide.cta}
                     <ArrowRight className="ml-2 h-3.5 w-3.5" />
@@ -141,7 +141,7 @@ const Home = () => {
 
                   {/* <Link
                     to="/about"
-                    className="inline-flex items-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-teal-900 transition-all duration-300"
+                    className="inline-flex items-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-crimson-900 transition-all duration-300"
                   >
                     Our Story
                   </Link> */}
@@ -172,7 +172,7 @@ const Home = () => {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-yellow-400' : 'bg-white/50'
+              className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-amber-400' : 'bg-white/50'
                 }`}
             />
           ))}
@@ -198,9 +198,9 @@ const Home = () => {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-2xl font-serif font-bold mb-3">{collection.title}</h3>
+                  <h3 className="text-2xl font-serif font-bold mb-3 text-[#fff8e7]">{collection.title}</h3>
                   <p className="text-base opacity-90 mb-5">{collection.description}</p>
-                  <span className="inline-flex items-center text-yellow-300 font-semibold">
+                  <span className="inline-flex items-center text-amber-200 font-semibold">
                     Shop
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </span>
@@ -213,7 +213,7 @@ const Home = () => {
 
 
       {/* Designer Quote */}
-      <section className="relative py-8 bg-gradient-to-br from-teal-50 via-white to-teal-100 overflow-hidden">
+      <section className="relative py-8 bg-gradient-to-br from-crimson-50 via-white to-crimson-100 overflow-hidden">
         {/* Decorative background (pattern.svg should be inside /public) */}
         <div className="absolute inset-0 opacity-10 bg-[url('/pattern.svg')] bg-center bg-cover" />
 
@@ -225,7 +225,7 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Quote className="h-12 w-12 text-yellow-500 mx-auto mb-6" />
+            <Quote className="h-12 w-12 text-amber-500 mx-auto mb-6" />
           </motion.div>
 
           {/* Quote animation */}
@@ -234,7 +234,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-serif text-yellow-600 mb-6 leading-relaxed"
+            className="text-2xl md:text-3xl font-serif text-amber-600 mb-6 leading-relaxed"
           >
             "Every thread tells a story, every pattern carries the wisdom of generations,
             and every garment represents our commitment to keeping the traditions of Assam alive."
@@ -246,7 +246,7 @@ const Home = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
             viewport={{ once: true }}
-            className="text-yellow-700 font-semibold block"
+            className="text-amber-700 font-semibold block"
           >
             — Zinku, Creative Director
           </motion.cite>
@@ -258,7 +258,7 @@ const Home = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
               New Arrivals
             </h2>
           </div>
@@ -305,7 +305,7 @@ const Home = () => {
                       </span>
                     </>
                   ) : (
-                    <span className="text-sm font-semibold text-teal-700">
+                    <span className="text-sm font-semibold text-crimson-700">
                       ₹{item.price.toLocaleString('en-IN')}
                     </span>
                   )}
@@ -318,7 +318,7 @@ const Home = () => {
           <div className="text-center mt-8">
             <Link
               to="/shop?filter=new"
-              className="inline-flex items-center bg-teal-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-teal-700 transition-colors"
+              className="inline-flex items-center bg-crimson-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-crimson-700 transition-colors"
             >
               View All New Arrivals
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -329,7 +329,7 @@ const Home = () => {
 
 
       {/* Heritage Story
-      <section className="py-16 bg-gradient-to-r from-yellow-50 to-orange-50">
+      <section className="py-16 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
             <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-6">
@@ -338,7 +338,7 @@ const Home = () => {
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
               In the heart of Assam, where the Brahmaputra flows with ancient stories, our artisans continue a tradition that spans centuries. Each Muga silk thread is spun with the same care and precision that our ancestors used, creating garments that are not just clothing, but pieces of living history.
             </p>
-            <div className="flex items-center justify-center space-x-8 text-teal-600">
+            <div className="flex items-center justify-center space-x-8 text-crimson-600">
               <div className="text-center">
                 <div className="text-2xl font-bold">500+</div>
                 <div className="text-sm">Years of Tradition</div>
@@ -372,9 +372,9 @@ const Home = () => {
               />
             </div>
 
-            {/* a2 - Top Right Content → now teal gradient */}
-            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-tr from-white via-teal-50 to-emerald-100 shadow-lg h-[36rem] lg:h-[48rem]">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-6">
+            {/* a2 - Top Right Content → now crimson gradient */}
+            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-tr from-white via-crimson-50 to-crimson-100 shadow-lg h-[36rem] lg:h-[48rem]">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-6">
                 Celebrating Assamese Heritage
               </h2>
               <p className="text-gray-700 mb-6 leading-relaxed">
@@ -382,7 +382,7 @@ const Home = () => {
               </p>
               <Link
                 to="/about"
-                className="inline-flex items-center bg-teal-600 text-white px-6 py-3 rounded-none font-semibold hover:bg-teal-700 transition-colors"
+                className="inline-flex items-center bg-crimson-600 text-white px-6 py-3 rounded-none font-semibold hover:bg-crimson-700 transition-colors"
               >
                 Discover Our Story
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -390,22 +390,20 @@ const Home = () => {
             </div>
 
             {/* b1 - Bottom Left Custom Content → now golden gradient */}
-            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-br from-white via-amber-50 to-yellow-100 shadow-lg h-[36rem] lg:h-[48rem]">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-6">
+            <div className="flex flex-col justify-center rounded-none p-12 bg-gradient-to-br from-white via-amber-50 to-amber-100 shadow-lg h-[36rem] lg:h-[48rem]">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-6">
                 Customize Your Attire
               </h2>
               <p className="text-gray-700 mb-6 leading-relaxed">
                 Work with our designers to create a one-of-a-kind outfit that perfectly reflects your style and heritage.
               </p>
-              <a
-                href="https://wa.me/917002772312?text=Hey,%20I%20am%20interested%20in%20booking%20an%20appointment%20for%20a%20personal%20consultation.%20Please%20share%20the%20available%20slots."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-yellow-400 text-teal-900 px-6 py-3 rounded-none font-semibold hover:bg-yellow-300 transition-colors"
-              >
-                Schedule an Appointment
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              <Link
+  to="/custom"
+  className="inline-flex items-center bg-amber-400 text-crimson-900 px-6 py-3 rounded-none font-semibold hover:bg-amber-300 transition-colors"
+>
+  Customise Your Attire
+  <ArrowRight className="ml-2 h-5 w-5" />
+</Link>
 
             </div>
 
@@ -428,10 +426,10 @@ const Home = () => {
 
 
       {/* The Spotlight */}
-      <section className="py-16 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50">
+      <section className="py-16 bg-gradient-to-br from-amber-50 via-rose-50 to-crimson-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
               The Spotlight
             </h2>
             <p className="text-lg text-gray-600 italic">
@@ -489,15 +487,15 @@ const Home = () => {
       {/* Artisan Story */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-teal-900 to-teal-800 rounded-2xl p-8 md:p-12 text-white">
+          <div className="bg-gradient-to-r from-crimson-900 to-crimson-800 rounded-2xl p-8 md:p-12 text-white">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <Quote className="h-8 w-8 text-yellow-300 mb-4" />
+                <Quote className="h-8 w-8 text-amber-300 mb-4" />
                 <blockquote className="text-xl md:text-2xl font-serif mb-6 leading-relaxed">
                   "When I weave, I don't just create fabric. I weave dreams, stories, and the hopes of generations into every thread."
                 </blockquote>
-                <cite className="text-yellow-300 font-semibold">— Rita Devi, Master Weaver</cite>
-                <p className="text-teal-200 text-sm mt-2">20 years of weaving excellence</p>
+                <cite className="text-amber-300 font-semibold">— Rita Devi, Master Weaver</cite>
+                <p className="text-crimson-200 text-sm mt-2">20 years of weaving excellence</p>
               </div>
               <div className="relative">
                 <img
@@ -505,7 +503,7 @@ const Home = () => {
                   alt="Master weaver at work"
                   className="rounded-lg shadow-2xl"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-yellow-400 text-teal-900 p-4 rounded-lg shadow-lg">
+                <div className="absolute -bottom-4 -right-4 bg-amber-400 text-crimson-900 p-4 rounded-lg shadow-lg">
                   <p className="font-bold text-sm">Supporting 150+ Artisans</p>
                 </div>
               </div>
@@ -518,12 +516,12 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
               <a
                 href="https://www.instagram.com/julethi_by_zinku"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-yellow-600 transition-colors duration-300"
+                className="hover:text-amber-600 transition-colors duration-300"
               >
                 @julethi_by_zinku
               </a>
@@ -555,28 +553,28 @@ const Home = () => {
       </section>
 
       {/* Newsletter
-      <section className="py-16 bg-teal-900 text-white">
+      <section className="py-16 bg-crimson-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
             Stay In Touch
           </h2>
-          <p className="text-xl text-teal-100 mb-8">
+          <p className="text-xl text-crimson-100 mb-8">
             Be the first to know about new collections, exclusive events, and special offers
           </p>
           <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              className="flex-1 px-4 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-300"
             />
             <button
               type="submit"
-              className="bg-yellow-400 text-teal-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-colors"
+              className="bg-amber-400 text-crimson-900 px-8 py-3 rounded-full font-semibold hover:bg-amber-300 transition-colors"
             >
               Subscribe
             </button>
           </form>
-          <p className="text-sm text-teal-300 mt-4">
+          <p className="text-sm text-crimson-300 mt-4">
             We respect your privacy. Unsubscribe at any time.
           </p>
         </div>

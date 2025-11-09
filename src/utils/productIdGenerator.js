@@ -2,13 +2,13 @@
  * Generate unique product ID with category prefix
  * Category prefixes:
  * - bridal: BR
- * - fusion: FS
+ * - men: FS
  * - occasion: OC
  */
 export function generateProductId(category) {
   const prefixMap = {
     bridal: 'BR',
-    fusion: 'FS',
+    men: 'FS',
     occasion: 'OC'
   };
 

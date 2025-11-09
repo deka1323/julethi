@@ -27,7 +27,7 @@ const Contact = () => {
   return (
     <div className="pt-14 min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-teal-900 to-teal-700 text-white py-12">
+      <section className="relative bg-gradient-to-r from-crimson-900 to-crimson-700 text-white py-12">
         <div className="absolute inset-0">
           <img
             src="/images/j1.jpeg"
@@ -39,7 +39,7 @@ const Contact = () => {
           <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">
             Get In Touch
           </h1>
-          <p className="text-lg md:text-xl text-teal-100 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-crimson-100 max-w-2xl mx-auto">
             We'd love to hear from you. Visit our atelier or reach out to us for personalized styling consultation.
           </p>
         </div>
@@ -58,8 +58,8 @@ const Contact = () => {
                   const IconComponent = info.icon;
                   return (
                     <div key={index} className="flex items-start space-x-4">
-                      <div className="bg-teal-100 p-3 rounded-lg">
-                        <IconComponent className="h-6 w-6 text-teal-600" />
+                      <div className="bg-crimson-100 p-3 rounded-lg">
+                        <IconComponent className="h-6 w-6 text-crimson-600" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 mb-2">{info.title}</h3>
@@ -82,7 +82,7 @@ const Contact = () => {
                     href="https://instagram.com/julethi_by_zinku"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-teal-100 p-3 rounded-lg text-teal-600 hover:bg-teal-200 transition-colors"
+                    className="bg-crimson-100 p-3 rounded-lg text-crimson-600 hover:bg-crimson-200 transition-colors"
                   >
                     <Instagram className="h-5 w-5" />
                   </a>
@@ -90,7 +90,7 @@ const Contact = () => {
                     href="https://facebook.com/zinkumk"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-teal-100 p-3 rounded-lg text-teal-600 hover:bg-teal-200 transition-colors"
+                    className="bg-crimson-100 p-3 rounded-lg text-crimson-600 hover:bg-crimson-200 transition-colors"
                   >
                     <Facebook className="h-5 w-5" />
                   </a>
@@ -100,16 +100,16 @@ const Contact = () => {
 
             {/* CTA Section replacing form */}
             <div className="lg:col-span-2 flex items-center justify-center">
-              <div className="bg-gradient-to-r from-teal-800 to-teal-600 rounded-2xl p-12 text-center text-white shadow-lg">
+              <div className="bg-gradient-to-r from-crimson-800 to-crimson-600 rounded-2xl p-12 text-center text-white shadow-lg">
                 <h2 className="text-3xl font-serif font-bold mb-6">
                   Book a Personal Consultation
                 </h2>
-                <p className="text-teal-100 text-lg mb-8">
+                <p className="text-crimson-100 text-lg mb-8">
                   Experience personalized service with our design experts. Schedule a one-on-one consultation
                   to create your perfect ensemble.
                 </p>
                 <button
-                  className="bg-yellow-400 text-teal-900 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 transition-colors"
+                  className="bg-yellow-400 text-crimson-900 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 transition-colors"
                   onClick={() => {
                     const phone = "917002772312";
                     const message = encodeURIComponent(

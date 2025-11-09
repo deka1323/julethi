@@ -29,7 +29,7 @@ GLOBAL SECONDARY INDEXES:
   "imgUrl": "https://...",
   "price": 45000,
   "fabric": "Silk & Velvet",
-  "category": "bridal",                         // bridal | fusion | occasion
+  "category": "bridal",                         // bridal | men | occasion
   "description": "Elegant red bridal lehenga...",
   "isNewArrival": true,
   "createdAt": "2025-09-28T12:00:00.000Z",
@@ -63,7 +63,7 @@ GLOBAL SECONDARY INDEXES:
 Category        Prefix      Example ID
 -------------------------------------------------
 bridal          BR          BR123456
-fusion          FS          FS789012
+men          FS          FS789012
 occasion        OC          OC345678
 
 ID Generation Pattern: {PREFIX}{6-digit-random-number}
@@ -117,7 +117,7 @@ DynamoDB Query:
 3. GET PRODUCTS BY CATEGORY
 ----------------------------
 Operation: Query on GSI1
-Parameters: category ("bridal" | "fusion" | "occasion")
+Parameters: category ("bridal" | "men" | "occasion")
 Query:
   GSI1PK = "CATEGORY#bridal"
 Response: List of products in specified category

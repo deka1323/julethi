@@ -1,7 +1,7 @@
 # Julethi Boutique - E-Commerce Application
 
 ## Overview
-A modern React-based e-commerce platform for a boutique specializing in bridal, fusion, and occasion wear. The application features a product catalog, admin dashboard, and shopping experience.
+A modern React-based e-commerce platform for a boutique specializing in bridal, men, and occasion wear. The application features a product catalog, admin dashboard, and shopping experience.
 
 ## Project Architecture
 
@@ -61,7 +61,7 @@ src/
 ## Features
 
 ### Customer Features
-- Browse products by category (Bridal, Fusion, Occasion wear)
+- Browse products by category (Bridal, men, Occasion wear)
 - View product details (name, price, fabric, description)
 - Filter new arrivals
 - Search products
@@ -77,7 +77,7 @@ src/
 
 ## Product Categories
 - **Bridal**: Wedding and bridal wear (ID prefix: BR)
-- **Fusion**: Indo-western and contemporary designs (ID prefix: FS)
+- **men**: Indo-western and contemporary designs (ID prefix: FS)
 - **Occasion**: Party and festive wear (ID prefix: OC)
 
 ## Environment Setup

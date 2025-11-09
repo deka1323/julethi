@@ -45,7 +45,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-teal-900/95 backdrop-blur-md shadow-lg' : 'bg-teal-900'
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-crimson-900/95 backdrop-blur-md shadow-lg' : 'bg-crimson-900'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,12 +67,12 @@ const Navbar = () => {
               </Link>
 
               {isShopOpen && (
-                <div className="absolute top-full left-0 bg-white shadow-xl rounded-lg mt-1 py-2 w-48 border border-emerald-100">
+                <div className="absolute top-full left-0 bg-white shadow-xl rounded-lg mt-1 py-2 w-48 border border-crimson-100">
                   <Link
                     to="/shop/bridal"
                     className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/bridal'
-                        ? 'bg-yellow-50 text-yellow-700 font-medium'
-                        : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
+                      ? 'bg-yellow-50 text-yellow-700 font-medium'
+                      : 'text-gray-700 hover:bg-crimson-50 hover:text-crimson-800'
                       }`}
                   >
                     Bridal Wear
@@ -80,21 +80,31 @@ const Navbar = () => {
                   <Link
                     to="/shop/occasion"
                     className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/occasion'
-                        ? 'bg-yellow-50 text-yellow-700 font-medium'
-                        : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
+                      ? 'bg-yellow-50 text-yellow-700 font-medium'
+                      : 'text-gray-700 hover:bg-crimson-50 hover:text-crimson-800'
                       }`}
                   >
                     Occasion Wear
                   </Link>
                   <Link
-                    to="/shop/fusion"
-                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/fusion'
-                        ? 'bg-yellow-50 text-yellow-700 font-medium'
-                        : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800'
+                    to="/shop/men"
+                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/shop/men'
+                      ? 'bg-yellow-50 text-yellow-700 font-medium'
+                      : 'text-gray-700 hover:bg-crimson-50 hover:text-crimson-800'
                       }`}
                   >
-                    Party Wear
+                    Mens Wear
                   </Link>
+                  <Link
+                    to="/house-of-luit"
+                    className={`block px-4 py-2 text-sm transition-colors ${location.pathname === '/house-of-luit'
+                        ? 'bg-amber-50 text-amber-700 font-medium'   // active state
+                        : 'text-gray-700 hover:bg-amber-50 hover:text-amber-800' // hover state
+                      }`}
+                  >
+                    House of Luit
+                  </Link>
+
                 </div>
               )}
             </div>
@@ -191,7 +201,7 @@ const Navbar = () => {
 
         {/* Mobile Search Input */}
         {isSearchOpen && !isMobileMenuOpen && (
-          <div className="md:hidden px-4 py-2 bg-teal-800 border-t border-teal-700">
+          <div className="md:hidden px-4 py-2 bg-crimson-800 border-t border-crimson-700">
             <form onSubmit={handleSearch} className="flex items-center">
               <input
                 type="text"
@@ -214,9 +224,9 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-teal-900 border-t border-teal-700">
+          <div className="md:hidden bg-crimson-900 border-t border-crimson-700">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {['/', '/shop', '/shop/bridal', '/shop/occasion', '/shop/fusion', '/about', '/contact'].map((path, i) => (
+              {['/', '/shop', '/shop/bridal', '/shop/occasion', '/shop/men', '/about', '/contact'].map((path, i) => (
                 <Link
                   key={i}
                   to={path}
@@ -228,7 +238,7 @@ const Navbar = () => {
                   {path === '/shop' && 'Shop'}
                   {path === '/shop/bridal' && 'Bridal Wear'}
                   {path === '/shop/occasion' && 'Occasion Wear'}
-                  {path === '/shop/fusion' && 'Fusion Wear'}
+                  {path === '/shop/men' && 'men Wear'}
                   {path === '/about' && 'About Us'}
                   {path === '/contact' && 'Contact'}
                 </Link>

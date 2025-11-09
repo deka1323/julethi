@@ -8,7 +8,7 @@ const OccasionWear = () => {
   return (
     <div className="pt-14 min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-teal-900 to-teal-700 text-white py-12">
+      <section className="relative bg-gradient-to-r from-crimson-900 to-crimson-700 text-white py-12">
         <div className="absolute inset-0">
           <img
             src="/images/j2.jpeg"
@@ -32,7 +32,7 @@ const OccasionWear = () => {
     {/* Section Header */}
     <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center sm:items-center mb-8 space-y-4 sm:space-y-0">
       <div className="text-center sm:text-left">
-        <h2 className="text-2xl font-serif font-bold text-teal-900 mb-2">
+        <h2 className="text-2xl font-serif font-bold text-crimson-900 mb-2">
           Occasion Wear Collection
         </h2>
         <p className="text-gray-600">{occasionProducts.length} elegant pieces</p>

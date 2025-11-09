@@ -29,7 +29,7 @@ export default function ProductDetail() {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product not found</h2>
           <button
             onClick={() => navigate("/shop")}
-            className="text-teal-600 hover:text-teal-700 font-medium"
+            className="text-crimson-600 hover:text-crimson-700 font-medium"
           >
             Back to Shop
           </button>
@@ -79,18 +79,24 @@ export default function ProductDetail() {
   };
 
   const handleWhatsAppClick = () => {
-    const currentUrl = window.location.href;
-    const message = `Hi! I am interested in the product "${product.name}". Could you please share more details?\n\nProduct Link: ${currentUrl}`;
+    const origin = window.location.origin;
+
+    // Build a canonical product URL based on your routing
+    // (If you use `/products/:id` or `/products/:slug`, adjust accordingly)
+    const productPath = `${origin}/product/${product.id}`;
+
+    const message = `Hi! I am interested in the product "${product.name}". Could you please share more details?\n\nProduct Link: ${productPath}`;
     const whatsappUrl = `https://wa.me/917002772312?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
+
 
   const recommended = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-teal-50/10 py-20 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-crimson-50/10 py-20 px-4">
       {/* Product Layout */}
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-6xl mx-auto grid md:grid-cols-2 overflow-hidden">
 
@@ -175,7 +181,7 @@ export default function ProductDetail() {
                 <button
                   key={i}
                   onClick={() => setCurrentImage(i)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${currentImage === i ? "bg-teal-600 scale-110" : "bg-gray-300"
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${currentImage === i ? "bg-crimson-600 scale-110" : "bg-gray-300"
                     }`}
                 ></button>
               ))}
@@ -202,20 +208,20 @@ export default function ProductDetail() {
         <motion.div
           initial={{ opacity: 0, x: 15 }}
           animate={{ opacity: 1, x: 0 }}
-          className="p-8 md:p-10 flex flex-col justify-between bg-gradient-to-b from-white via-teal-50/5 to-white"
+          className="p-8 md:p-10 flex flex-col justify-between bg-gradient-to-b from-white via-crimson-50/5 to-white"
         >
           <div>
             {/* Back Button */}
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center text-gray-500 hover:text-teal-700 mb-5 transition-colors text-sm"
+              className="flex items-center text-gray-500 hover:text-crimson-700 mb-5 transition-colors text-sm"
             >
               <ArrowLeft className="w-4 h-4 mr-2" /> Back
             </button>
 
             {/* Product Info */}
             <div className="mb-5">
-              <span className="inline-block bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-[11px] font-medium mb-2">
+              <span className="inline-block bg-crimson-100 text-crimson-700 px-3 py-1 rounded-full text-[11px] font-medium mb-2">
                 {product.category.charAt(0).toUpperCase() + product.category.slice(1)} Wear
               </span>
               <h1 className="text-xl md:text-2xl font-semibold text-gray-800 mb-1 leading-snug">
@@ -255,7 +261,7 @@ export default function ProductDetail() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 mb-1">Fabric</h3>
                 <div className="flex items-center text-gray-600">
-                  <Tag className="w-4 h-4 mr-2 text-teal-600" /> {product.fabric}
+                  <Tag className="w-4 h-4 mr-2 text-crimson-600" /> {product.fabric}
                 </div>
               </div>
 
@@ -282,9 +288,9 @@ export default function ProductDetail() {
                 <MessageCircle className="w-4 h-4" />
                 <span>Buy via WhatsApp</span>
               </button>
-              <p className="text-[11px] text-gray-500 text-center mt-2">
-                Includes this product link in message
-              </p>
+              {/* <p className="text-[11px] text-gray-500 text-center mt-2">
+                  Includes this product link in message
+                </p> */}
             </div>
           </div>
         </motion.div>

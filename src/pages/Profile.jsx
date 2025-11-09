@@ -45,8 +45,8 @@ const Profile = () => {
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="bg-teal-100 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-              <User className="h-10 w-10 text-teal-600" />
+            <div className="bg-crimson-100 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+              <User className="h-10 w-10 text-crimson-600" />
             </div>
             <h1 className="text-3xl font-serif font-bold text-gray-900 mb-2">
               Admin Login
@@ -77,7 +77,7 @@ const Profile = () => {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crimson-500 focus:border-crimson-500"
                     placeholder="Enter your username"
                   />
                   <User className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
@@ -96,7 +96,7 @@ const Profile = () => {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-crimson-500 focus:border-crimson-500"
                     placeholder="Enter your password"
                   />
                   <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
@@ -116,7 +116,7 @@ const Profile = () => {
 
               <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
+                className="w-full bg-crimson-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-crimson-700 transition-colors"
               >
                 Sign In
               </button>
@@ -139,7 +139,7 @@ const Profile = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Forgot your password?{' '}
-              <button className="text-teal-600 hover:text-teal-700 font-semibold">
+              <button className="text-crimson-600 hover:text-crimson-700 font-semibold">
                 Contact Support
               </button>
             </p>

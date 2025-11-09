@@ -14,7 +14,7 @@ export default function Overview() {
 
   const totalProducts = products.length;
   const bridalCount = products.filter((p) => p.category === 'bridal').length;
-  const fusionCount = products.filter((p) => p.category === 'fusion').length;
+  const menCount = products.filter((p) => p.category === 'men').length;
   const occasionCount = products.filter((p) => p.category === 'occasion').length;
   const newArrivals = products.filter((p) => p.isNewArrival).length;
   const totalValue = products.reduce((sum, p) => sum + p.price, 0);
@@ -57,7 +57,7 @@ export default function Overview() {
 
   const categoryData = [
     { name: 'Bridal Wear', count: bridalCount, color: 'bg-pink-500', percentage: ((bridalCount / totalProducts) * 100).toFixed(0) },
-    { name: 'Fusion Wear', count: fusionCount, color: 'bg-blue-500', percentage: ((fusionCount / totalProducts) * 100).toFixed(0) },
+    { name: 'Mens Wear', count: menCount, color: 'bg-blue-500', percentage: ((menCount / totalProducts) * 100).toFixed(0) },
     { name: 'Occasion Wear', count: occasionCount, color: 'bg-teal-500', percentage: ((occasionCount / totalProducts) * 100).toFixed(0) },
   ];
 

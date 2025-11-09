@@ -9,7 +9,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 function generateProductId(category) {
-  const prefixMap = { bridal: "BR", fusion: "FS", occasion: "OC" };
+  const prefixMap = { bridal: "BR",men: "FS", occasion: "OC"};
   const prefix = prefixMap[category] || "PR";
   const randomNum = Math.floor(100000 + Math.random() * 900000);
   return `${prefix}${randomNum}`;
@@ -207,7 +207,7 @@ export default function AddProduct() {
               >
                 <option value="">Select Category</option>
                 <option value="bridal">Bridal Wear</option>
-                <option value="fusion">Fusion Wear</option>
+                <option value="men">Mens Wear</option>
                 <option value="occasion">Occasion Wear</option>
               </select>
             </div>

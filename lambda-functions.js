@@ -29,7 +29,7 @@ const TABLE_NAME = process.env.TABLE_NAME || 'JulethiBoutiqueTable';
 function generateProductId(category) {
   const prefixMap = {
     bridal: 'BR',
-    fusion: 'FS',
+    men: 'FS',
     occasion: 'OC'
   };
 
@@ -166,7 +166,7 @@ exports.getProductById = async (event) => {
 // =============================================================================
 /**
  * GET /products/category/{category}
- * Retrieve products by category (bridal, fusion, occasion)
+ * Retrieve products by category (bridal, men, occasion)
  */
 exports.getProductsByCategory = async (event) => {
   try {
@@ -587,7 +587,7 @@ exports.getDashboardStats = async (event) => {
     const products = allProducts.Items;
     const totalProducts = products.length;
     const bridalCount = products.filter(p => p.category === 'bridal').length;
-    const fusionCount = products.filter(p => p.category === 'fusion').length;
+    const fusionCount = products.filter(p => p.category === 'men').length;
     const occasionCount = products.filter(p => p.category === 'occasion').length;
     const newArrivals = products.filter(p => p.isNewArrival).length;
     const totalValue = products.reduce((sum, p) => sum + p.price, 0);
@@ -605,7 +605,7 @@ exports.getDashboardStats = async (event) => {
         totalProducts,
         categoryDistribution: {
           bridal: bridalCount,
-          fusion: fusionCount,
+          men: menCount,
           occasion: occasionCount
         },
         newArrivals,

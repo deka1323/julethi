@@ -82,7 +82,7 @@ const About = () => {
   return (
   <div className="pt-14">
     {/* ---------------- Brand Story ---------------- */}
-    <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 to-teal-50 overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 to-crimson-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
           {/* Text Section */}
@@ -92,7 +92,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-teal-800 mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-crimson-800 mb-6 sm:mb-8">
               The Julethi Legacy
             </h2>
             <div className="prose prose-sm sm:prose-lg text-gray-600 leading-relaxed">
@@ -120,7 +120,7 @@ const About = () => {
               className="rounded-2xl shadow-2xl w-full sm:h-[400px] md:h-[500px] object-cover object-center"
             />
             <motion.div
-              className="absolute -bottom-6 -left-6 sm:-bottom-8 sm:-left-10 bg-teal-600 text-white p-4 sm:p-5 rounded-2xl shadow-lg"
+              className="absolute -bottom-6 -left-6 sm:-bottom-8 sm:-left-10 bg-crimson-600 text-white p-4 sm:p-5 rounded-2xl shadow-lg"
               animate={{ y: [0, -5, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
             >
@@ -159,9 +159,9 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-teal-800 mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-crimson-800 mb-6 sm:mb-8">
               Meet Zinku
-              <span className="block text-lg sm:text-xl text-teal-600 font-normal mt-1 sm:mt-2">
+              <span className="block text-lg sm:text-xl text-crimson-600 font-normal mt-1 sm:mt-2">
                 Creative Director & Founder
               </span>
             </h2>
@@ -180,9 +180,9 @@ const About = () => {
     </section>
 
      {/* ---------------- Journey Roadmap Section ---------------- */}
-<section className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-teal-50 to-teal-50 overflow-hidden">
+<section className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-crimson-50 to-crimson-50 overflow-hidden">
   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-teal-800 text-center mb-12 sm:mb-16">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-crimson-800 text-center mb-12 sm:mb-16">
       The Journey
     </h2>
 
@@ -209,7 +209,7 @@ const About = () => {
           transition={{ duration: 0.7, delay: idx * 0.2 }}
         >
           {/* Dot */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-teal-800 rounded-full shadow-lg border-4 border-white z-10"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-crimson-800 rounded-full shadow-lg border-4 border-white z-10"></div>
 
           {/* Image */}
           <div className="w-1/2 flex justify-end px-12">
@@ -255,7 +255,7 @@ const About = () => {
     >
       <div className="flex items-start mb-2">
         {/* Dot next to text header */}
-        <div className="w-4 h-4 bg-teal-800 rounded-full shadow-lg border-2 border-white mt-1 mr-3"></div>
+        <div className="w-4 h-4 bg-crimson-800 rounded-full shadow-lg border-2 border-white mt-1 mr-3"></div>
         {/* Text Section */}
         <div>
           <h3 className="text-xl sm:text-2xl font-serif font-bold text-gray-800 mb-1">{item.title}</h3>
@@ -306,7 +306,7 @@ const About = () => {
           <img
             src={member.image}
             alt={member.name}
-            className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover mb-2 sm:mb-3 border-2 border-teal-200"
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover mb-2 sm:mb-3 border-2 border-crimson-200"
           />
           <h3 className="text-sm sm:text-base font-semibold text-gray-900">{member.name}</h3>
           <p className="text-gray-600 text-xs sm:text-xs">{member.role}</p>

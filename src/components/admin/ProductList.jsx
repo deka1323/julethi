@@ -85,7 +85,7 @@ export default function ProductList() {
             >
               <option value="all">All Categories</option>
               <option value="bridal">Bridal</option>
-              <option value="fusion">Fusion</option>
+              <option value="men">Men</option>
               <option value="occasion">Occasion</option>
             </select>
           </div>

@@ -55,7 +55,9 @@ const Shop = () => {
     { id: 'all', name: 'All Collections', count: showNewArrivalsOnly ? allProducts.filter(p => p.isNewArrival).length : allProducts.length },
     { id: 'bridal', name: 'Bridal Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'bridal' && p.isNewArrival).length : allProducts.filter(p => p.category === 'bridal').length },
     { id: 'occasion', name: 'Occasion Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'occasion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'occasion').length },
-    { id: 'fusion', name: 'Party Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'fusion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'fusion').length }
+    { id: 'men', name: 'Mens Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'men' && p.isNewArrival).length : allProducts.filter(p => p.category === 'men').length },
+    { id: 'house-of-luit', name: 'House of Luit', count: showNewArrivalsOnly? allProducts.filter((p) => p.category === 'cotton' && p.isNewArrival).length: allProducts.filter((p) => p.category === 'cotton').length}
+
   ];
 
   return (
@@ -64,7 +66,7 @@ const Shop = () => {
 
         {/* Header */}
         <div className="mb-8 text-center sm:text-left">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-teal-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
             {searchQuery ? `Search Results for "${searchQuery}"` : showNewArrivalsOnly ? 'New Arrivals' : 'All Collections'}
           </h1>
           <p className="text-gray-600">
@@ -96,8 +98,8 @@ const Shop = () => {
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
-                  ? 'bg-teal-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                  ? 'bg-crimson-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
                   }`}
               >
                 {category.name} ({category.count})
@@ -112,13 +114,13 @@ const Shop = () => {
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded ${viewMode === 'grid' ? 'bg-teal-100 text-teal-600' : 'text-gray-400'}`}
+                className={`p-2 rounded ${viewMode === 'grid' ? 'bg-crimson-100 text-crimson-600' : 'text-gray-400'}`}
               >
                 <Grid className="h-5 w-5" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded ${viewMode === 'list' ? 'bg-teal-100 text-teal-600' : 'text-gray-400'}`}
+                className={`p-2 rounded ${viewMode === 'list' ? 'bg-crimson-100 text-crimson-600' : 'text-gray-400'}`}
               >
                 <List className="h-5 w-5" />
               </button>
@@ -130,14 +132,14 @@ const Shop = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-crimson-500"
             >
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
               <option value="newest">Newest First</option>
             </select>
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-teal-600">
+            <button className="flex items-center space-x-2 text-gray-600 hover:text-crimson-600">
               <Filter className="h-5 w-5" />
               <span className="hidden sm:inline">Filter</span>
             </button>
@@ -205,8 +207,6 @@ const Shop = () => {
                     </div>
                   </div>
 
-
-
                   {/* Product Info */}
                   <div className={viewMode === "list" ? "flex-1 mt-2 sm:mt-0" : ""}>
                     <h3 className="text-sm text-gray-800 font-medium mb-2 line-clamp-1">
@@ -226,7 +226,7 @@ const Shop = () => {
                           </span>
                         </>
                       ) : (
-                        <span className="text-sm font-semibold text-teal-700">
+                        <span className="text-sm font-semibold text-crimson-700">
                           ₹{product.price.toLocaleString("en-IN")}
                         </span>
                       )}
@@ -252,7 +252,7 @@ const Shop = () => {
             <p className="text-gray-500 text-lg">No products found matching your search.</p>
             <Link
               to="/shop"
-              className="inline-block mt-4 text-teal-600 hover:text-teal-700 font-semibold"
+              className="inline-block mt-4 text-crimson-600 hover:text-crimson-700 font-semibold"
             >
               View all products
             </Link>

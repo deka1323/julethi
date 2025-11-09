@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group relative w-full sm:w-64 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-transparent hover:border-teal-200"
+      className="group relative w-full sm:w-64 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-transparent hover:border-crimson-200"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
@@ -106,8 +106,8 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* 🏷️ Product Info */}
-      <div className="p-4 bg-gradient-to-br from-white via-teal-50/20 to-white">
-        <h3 className="text-base font-semibold text-gray-800 mb-1 truncate font-serif group-hover:text-teal-700 transition-colors duration-300">
+      <div className="p-4 bg-gradient-to-br from-white via-crimson-50/20 to-white">
+        <h3 className="text-base font-semibold text-gray-800 mb-1 truncate font-serif group-hover:text-crimson-700 transition-colors duration-300">
           {product.name}
         </h3>
 
@@ -116,7 +116,7 @@ export default function ProductCard({ product }) {
         </p>
 
         <div className="flex items-center justify-between">
-          <span className="text-base font-bold text-teal-800">
+          <span className="text-base font-bold text-crimson-800">
             ₹{product.price.toLocaleString("en-IN")}
           </span>
 
