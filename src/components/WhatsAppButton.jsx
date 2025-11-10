@@ -1,42 +1,51 @@
-import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { X } from "lucide-react";
 
 const WhatsAppButton = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const location = useLocation();
 
   // WhatsApp business number (replace with actual number)
-  const whatsappNumber = '+917002772312';
+  const whatsappNumber = "+917002772312";
 
   const handleWhatsAppClick = () => {
     const currentUrl = window.location.href;
     const message = `Hi! I'm interested in your collection and would like to know more about your designs.\nI'm currently viewing: ${currentUrl}`;
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, "_blank");
     setShowPopup(false);
   };
 
-  // hide welcome bubble after 5s
+  // Hide welcome bubble after 5 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowWelcome(false), 5000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Hide button on specific pages
+  const hideOnPages = ["/shop", "/product","/custom"];
+  const isHidden = hideOnPages.some((path) =>
+    location.pathname.startsWith(path)
+  );
+
+  if (isHidden) return null;
 
   return (
     <>
       {/* Floating WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-float-y">
         <button
-  onClick={() => setShowPopup(true)}
-  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-110 overflow-hidden"
->
-  <img
-    src="/images/whatsapp.png"
-    alt="WhatsApp"
-    className="w-full h-full object-cover"
-  />
-</button>
-
+          onClick={() => setShowPopup(true)}
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-110 overflow-hidden"
+        >
+          <img
+            src="/images/whatsapp.png"
+            alt="WhatsApp"
+            className="w-full h-full object-cover"
+          />
+        </button>
 
         {/* Welcome bubble on landing */}
         {showWelcome && (
@@ -72,7 +81,8 @@ const WhatsAppButton = () => {
 
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
               <p className="text-sm text-gray-700">
-                Hi! I'm interested in your collection and would like to know more about your designs.
+                Hi! I'm interested in your collection and would like to know
+                more about your designs.
               </p>
             </div>
 

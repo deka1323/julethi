@@ -89,33 +89,52 @@ const Shop = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
-            <button
-              onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${showNewArrivalsOnly
-                ? 'bg-rose-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
-                }`}
-            >
-              {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
-                  ? 'bg-crimson-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
-                  }`}
-              >
-                {category.name} ({category.count})
-              </button>
-            ))}
-          </div>
-        </div>
+<div className="mb-6">
+  {/* Top Row: New Arrivals + Custom Order */}
+  <div className="flex justify-center sm:justify-between items-center gap-3 mb-4 flex-wrap">
+    <button
+      onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
+      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+        showNewArrivalsOnly
+          ? 'bg-rose-500 text-white'
+          : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
+      }`}
+    >
+      {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
+    </button>
+
+    {/* Gradient Custom Order Button */}
+    <Link
+      to="/custom"
+      className="bg-gradient-to-r from-crimson-600 to-crimson-500 hover:opacity-90 text-amber-200 text-sm font-medium px-5 py-2 rounded-full shadow-md transition-all duration-300 whitespace-nowrap"
+    >
+      Custom Order
+    </Link>
+  </div>
+
+  {/* Scrollable Category Row */}
+  <div className="relative">
+    <div
+      className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 sm:px-0"
+      style={{ WebkitOverflowScrolling: 'touch' }}
+    >
+      {categories.map((category) => (
+        <button
+          key={category.id}
+          onClick={() => setSelectedCategory(category.id)}
+          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            selectedCategory === category.id
+              ? 'bg-crimson-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
+          }`}
+        >
+          {category.name} ({category.count})
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
 
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 pb-4 border-b border-gray-200 space-y-2 sm:space-y-0">
@@ -154,6 +173,7 @@ const Shop = () => {
             </button>
           </div>
         </div>
+        
 
         {/* Loading */}
         {loading && (

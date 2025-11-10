@@ -223,29 +223,42 @@ const Navbar = () => {
         )}
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-crimson-900 border-t border-crimson-700">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {['/', '/shop', '/shop/bridal', '/shop/occasion', '/shop/men', '/about', '/contact'].map((path, i) => (
-                <Link
-                  key={i}
-                  to={path}
-                  className={`block px-3 py-2 text-sm ${location.pathname === path ? 'text-yellow-400 font-medium' : 'text-white hover:text-yellow-300'
-                    } ${path.includes('/shop/') ? 'pl-6' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {path === '/' && 'Home'}
-                  {path === '/shop' && 'Shop'}
-                  {path === '/shop/bridal' && 'Bridal Wear'}
-                  {path === '/shop/occasion' && 'Occasion Wear'}
-                  {path === '/shop/men' && 'men Wear'}
-                  {path === '/about' && 'About Us'}
-                  {path === '/contact' && 'Contact'}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+{isMobileMenuOpen && (
+  <div className="md:hidden bg-crimson-900 border-t border-crimson-700">
+    <div className="px-2 pt-2 pb-3 space-y-1">
+      {[
+        '/',
+        '/shop',
+        '/shop/bridal',
+        '/shop/occasion',
+        '/shop/men',
+        '/house-of-luit',
+        '/about',
+        '/contact',
+      ].map((path, i) => (
+        <Link
+          key={i}
+          to={path}
+          className={`block px-3 py-2 text-sm ${
+            location.pathname === path
+              ? 'text-yellow-400 font-medium'
+              : 'text-white hover:text-yellow-300'
+          } ${path.includes('/shop/') || path === '/house-of-luit' ? 'pl-6' : ''}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          {path === '/' && 'Home'}
+          {path === '/shop' && 'Shop'}
+          {path === '/shop/bridal' && 'Bridal Wear'}
+          {path === '/shop/occasion' && 'Occasion Wear'}
+          {path === '/shop/men' && 'Mens Wear'}
+          {path === '/house-of-luit' && 'House of Luit'}
+          {path === '/about' && 'About Us'}
+          {path === '/contact' && 'Contact'}
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
       </div>
     </nav>
   );

@@ -22,7 +22,7 @@ const MensWear = () => {
       <section className="relative bg-gradient-to-r from-crimson-900 to-crimson-700 text-white py-12">
         <div className="absolute inset-0">
           <img
-            src="/images/mens-hero.jpg"
+            src="/images/men.jpg"
             alt="Men's Wear hero"
             className="w-full h-full object-cover opacity-20"
           />

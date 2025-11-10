@@ -39,7 +39,7 @@ const HouseOfLuit = () => {
       <section className="relative bg-gradient-to-r from-amber-800 to-amber-600 text-white py-12">
         <div className="absolute inset-0">
           <img
-            src="/images/luit-hero.jpg"
+            src="/images/luit.png"
             alt="House of Luit hero"
             className="w-full h-full object-cover opacity-20"
           />
@@ -50,7 +50,7 @@ const HouseOfLuit = () => {
             House of Luit
           </h1>
           <p className="text-base md:text-lg text-amber-100 max-w-2xl mx-auto">
-            Discover the essence of Assam — elegant cotton attire, handcrafted
+            Discover the essence of Assam- elegant cotton attire, handcrafted
             home décor, and timeless accessories that celebrate culture and
             craftsmanship.
           </p>
@@ -72,7 +72,7 @@ const HouseOfLuit = () => {
             </div>
           </div>
 
-          {/* Subcategory Info */}
+          {/* Subcategory Info
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12 text-center">
             <div className="p-6 bg-amber-50 rounded-2xl shadow-sm">
               <h3 className="text-lg font-semibold text-amber-900 mb-2">
@@ -98,7 +98,7 @@ const HouseOfLuit = () => {
                 Statement adornments inspired by Assam’s rich heritage.
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">

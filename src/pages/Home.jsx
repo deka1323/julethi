@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllProducts } from '../redux/actions/productActions';
-import { ArrowRight, Star, Instagram, Heart, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { motion } from "framer-motion";
+import { ArrowRight, Star, Instagram, Heart, ChevronLeft, ChevronRight, Quote, User } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -36,7 +36,7 @@ const Home = () => {
       cta: 'Explore Collection'
     },
     {
-      title: 'Mens Wear Collection',
+      title: 'Signature Drapes ',
       // subtitle: 'Where tradition meets modernity in perfect harmony',
       image: '/images/hero3.png',
       cta: 'Explore Collection'
@@ -67,39 +67,55 @@ const Home = () => {
     {
       title: 'Bridal Collection',
       // description: 'Timeless elegance for your special day',
-      image: '/images/3.jpg',
+      image: '/images/f1.jpg',
       link: '/shop/bridal'
     },
     {
       title: 'Occasion Classics',
       // description: 'Perfect for celebrations and festivities',
-      image: '/images/2.jpeg',
+      image: '/images/f2.jpg',
       link: '/shop/occasion'
     },
     {
-      title: 'Mens Wear',
+      title: 'Signature Drapes',
       // description: 'Contemporary meets traditional',
-      image: '/images/4.jpeg',
-      link: '/shop/men'
+      image: '/images/f3.jpeg',
+      link: '/shop/bridal'
     }
   ];
 
 
   const instagramFeed = [
-    '/images/1.jpeg',
-    '/images/2.1.jpeg',
-    '/images/3.jpg',
-    '/images/4.jpeg',
-    '/images/5.jpg',
-    '/images/6.jpeg'
+    '/images/i2.jpg',
+    '/images/i1.jpg',
+    '/images/i3.jpg',
+    '/images/i4.jpg',
+    '/images/i5.jpg',
+    '/images/i6.jpg'
   ];
 
   const spotlightItems = [
-    { id: 1, name: 'Celebrity 1', image: '/images/1.jpeg' },
-    { id: 2, name: 'Celebrity 2', image: '/images/2.jpeg' },
-    { id: 3, name: 'Photoshoot 1', image: '/images/3.jpg' },
-    { id: 4, name: 'Photoshoot 2', image: '/images/4.jpeg' },
+    { id: 1, name: 'Barsharani Bishaya', image: '/images/barsha.jpg' },
+    { id: 2, name: 'Meghranjani', image: '/images/megh.jpg' },
+    { id: 3, name: 'Diganggana Bora ', image: '/images/digg.jpg' },
+    { id: 4, name: 'Reecha Chetry', image: '/images/reecha.jpg' },
+    { id: 4, name: 'Parismita Boruah', image: '/images/pari.jpg' },
   ];
+
+ const quotes = [
+  "Every thread tells a story of Assam's rich heritage.",
+  "We weave tradition into modern elegance.",
+  "Each garment reflects love, craft, and generations of wisdom."
+];
+
+const [currentQuote, setCurrentQuote] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentQuote((prev) => (prev + 1) % quotes.length);
+  }, 4000); // Change quote every 4 seconds
+  return () => clearInterval(interval);
+}, []);
 
   return (
     // <div
@@ -211,82 +227,66 @@ const Home = () => {
         </div>
       </section>
 
+{/* Designer Quotes - Compact, Bolder & Italic */}
+<section className="relative py-6 pb-4 bg-gradient-to-br from-crimson-50 via-white to-crimson-100 overflow-hidden">
+  {/* Decorative background pattern */}
+  <div className="absolute inset-0 opacity-10 bg-[url('/pattern.svg')] bg-center bg-cover" />
 
-      {/* Designer Quote */}
-      <section className="relative py-8 bg-gradient-to-br from-crimson-50 via-white to-crimson-100 overflow-hidden">
-        {/* Decorative background (pattern.svg should be inside /public) */}
-        <div className="absolute inset-0 opacity-10 bg-[url('/pattern.svg')] bg-center bg-cover" />
+  <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    {/* Quote Icon */}
+    <Quote className="h-8 w-8 text-amber-500 mx-auto mb-3" />
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Icon animation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <Quote className="h-12 w-12 text-amber-500 mx-auto mb-6" />
-          </motion.div>
+    {/* Rotating Quotes */}
+    <div className="h-16 flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.blockquote
+          key={currentQuote}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.6 }}
+          className="text-base md:text-lg font-serif font-semibold italic text-black leading-snug"
+        >
+          "{quotes[currentQuote]}"
+        </motion.blockquote>
+      </AnimatePresence>
+    </div>
+  </div>
+</section>
 
-          {/* Quote animation */}
-          <motion.blockquote
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-serif text-amber-600 mb-6 leading-relaxed"
-          >
-            "Every thread tells a story, every pattern carries the wisdom of generations,
-            and every garment represents our commitment to keeping the traditions of Assam alive."
-          </motion.blockquote>
+{/* New Arrivals */}
+<section className="pt-8 pb-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
+        New Arrivals
+      </h2>
+    </div>
 
-          {/* Author animation */}
-          <motion.cite
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="text-amber-700 font-semibold block"
-          >
-            — Zinku, Creative Director
-          </motion.cite>
-        </div>
-      </section>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      {newArrivalsProducts.map((item) => (
+        <Link
+          key={item.id}
+          to={`/product/${item.id}`}
+          className="group cursor-pointer"
+        >
+          <div className="relative overflow-hidden rounded-none mb-4">
+            {item.isNewArrival && (
+              <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
+                New
+              </span>
+            )}
 
+            {/* Image Carousel */}
+            <ImageCarousel images={item.images || [item.imgUrl]} />
 
-      {/* New Arrivals */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-crimson-900 mb-4">
-              New Arrivals
-            </h2>
+            {/* Wishlist Icon */}
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+              <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
+                <Heart className="h-5 w-5 text-gray-600" />
+              </button>
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {newArrivalsProducts.map((item) => (
-              <Link
-                key={item.id}
-                to={`/product/${item.id}`}
-                className="group cursor-pointer"
-              >
-                <div className="relative overflow-hidden rounded-none mb-4">
-                  {item.isNewArrival && (
-                    <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
-                      New
-                    </span>
-                  )}
-
-                  {/* Image Carousel (multiple images supported) */}
-                  <ImageCarousel images={item.images || [item.imgUrl]} />
-
-                  {/* Wishlist Icon */}
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
-                      <Heart className="h-5 w-5 text-gray-600" />
-                    </button>
-                  </div>
-                </div>
 
                 {/* Product Info */}
                 <h3 className="text-sm text-gray-700 mb-2">{item.name}</h3>
@@ -511,7 +511,86 @@ const Home = () => {
           </div>
         </div>
       </section>
+       
+      {/* Compact Google Reviews / Testimonials */}
+<section className="py-12 bg-gradient-to-br from-rose-50 via-white to-rose-100">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Section Heading */}
+    <div className="text-center mb-8">
+      <h2 className="text-2xl md:text-3xl font-serif font-bold text-crimson-900 mb-2">
+        Our Client Experiences
+      </h2>
+      <p className="text-sm md:text-base text-gray-600">
+        Verified Google Reviews
+      </p>
+    </div>
 
+    {/* Swiper Carousel */}
+    <Swiper
+      modules={[Navigation]}
+      navigation
+      spaceBetween={16}
+      slidesPerView={1}
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+      className="px-2 sm:px-4 lg:px-6"
+    >
+      {[
+        {
+          id: 1,
+          name: "Raj Kamal Gautam",
+          quote: "I had the privilege of choosing Julethi – A Boutique of Assam Silk for designing my Wedding Reception costumes for both the bride and groom, and I couldn’t be happier with the experience."
+        },
+        {
+          id: 2,
+          name: "Soonity Goswami",
+          quote: "I had a wonderful experience shopping at Julethi. The collection is truly exquisite, with a wide variety of traditional and modern designs. The fabric quality is excellent. Each piece reflects fine craftsmanship and attention to detail, showcasing the rich Assamese culture beautifully. Highly recommended!"
+        },
+        {
+          id: 3,
+          name: "Munni Ahmed",
+          quote: "I had ordered a Sador-Mekhela and honestly, it turned out to be absolutely amazing. From the quality of the fabric to the design, every detail reflects care and craftsmanship. The color combination, weaving, and finishing are simply perfect."
+        },
+        {
+          id: 4,
+          name: "Shanghamitra Goswami",
+          quote: "Your ability to blend craftsmanship with culture results in truly breathtaking creations. My first experience with Julethi was fantastic. Thanks, Julethi!"
+        },
+        {
+          id: 5,
+          name: "Jugal Gogoi",
+          quote: "Worth a review after I brought a couple of 'Chadar Mekhela' for my Mom. It's purely authentic. 100% you can rely upon. The quality of the fabrics and other items are top notch. Amazing products. Thumbs up!"
+        },
+        {
+          id: 6,
+          name: "Prerna Hazarika",
+          quote: "Exceptional designs and impeccable craftsmanship also understands your style and brings it to life…Highly recommend 💯🤍"
+        },
+        {
+          id: 7,
+          name: "Rinku Khound",
+          quote: "I love the collections. Very unique colours and designs. I bought a set of chadar mekhela and the quality of silk is outstanding. Highly recommended boutique of Assam silk traditional wear."
+        }
+      ].map((item) => (
+        <SwiperSlide key={item.id}>
+          <div className="group cursor-pointer overflow-hidden shadow rounded-lg bg-white p-4 flex flex-col">
+            {/* Quote */}
+            <p className="text-gray-700 italic text-sm mb-4">&quot;{item.quote}&quot;</p>
+
+            {/* Reviewer Name with Icon */}
+            <div className="flex items-center gap-2 mt-auto">
+              <User className="text-amber-400 w-5 h-5" />
+              <h3 className="text-base font-semibold text-crimson-900">{item.name}</h3>
+            </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+</section>
       {/* Instagram Feed */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

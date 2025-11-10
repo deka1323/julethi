@@ -4,7 +4,7 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Atelier Address',
+      title: 'Boutique Address',
       details: ['House no 10, 2, Karbi Namghar Path', 'SBI Colony, Bormotoria', 'Guwahati, Assam 781036']
     },
     {
@@ -40,7 +40,8 @@ const Contact = () => {
             Get In Touch
           </h1>
           <p className="text-lg md:text-xl text-crimson-100 max-w-2xl mx-auto">
-            We'd love to hear from you. Visit our atelier or reach out to us for personalized styling consultation.
+            Visit our atelier or reach out to us for personalized styling consultation.
+            We serve really awesome coffee.
           </p>
         </div>
       </section>
@@ -51,7 +52,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-serif font-bold text-gray-900 mb-8">
-                Visit Our Atelier
+                Visit Our Boutique
               </h2>
               <div className="space-y-8">
                 {contactInfo.map((info, index) => {
@@ -127,32 +128,77 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">
-              Find Our Atelier
-            </h2>
-            <p className="text-gray-600">
-              Located in the heart of Guwahati's fashion district
-            </p>
-          </div>
+      {/* Boutique & Factory Map Section (Compact + Visual) */}
+<section className="py-10 bg-gradient-to-br from-rose-50 via-white to-rose-100">
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Heading */}
+    <div className="text-center mb-8">
+      <h2 className="text-2xl font-serif font-bold text-gray-900 mb-2">
+        Our Locations
+      </h2>
+      <p className="text-gray-600 text-sm">
+        Visit our boutique or explore our production unit — where artistry meets craftsmanship.
+      </p>
+    </div>
 
-          <div className="rounded-2xl overflow-hidden h-96">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.414019810468!2d91.8094467!3d26.150642599999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375a59bea69bb819%3A0xbba455d0bb27d7b4!2sJulethi!5e0!3m2!1sen!2sin!4v1760682410201!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-2xl"
-            ></iframe>
-          </div>
+    {/* Two Columns */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Boutique */}
+      <div className="space-y-3 text-center md:text-left">
+        <div className="flex items-center justify-center md:justify-start gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a4 4 0 10-5.657 5.657l4.243 4.243 5.657-5.657z" />
+          </svg>
+          <h3 className="text-lg font-serif font-semibold text-gray-800">Boutique</h3>
         </div>
-      </section>
+
+        <div className="rounded-2xl overflow-hidden h-60 shadow-md border border-gray-200">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.414019810468!2d91.8094467!3d26.150642599999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375a59bea69bb819%3A0xbba455d0bb27d7b4!2sJulethi!5e0!3m2!1sen!2sin!4v1760682410201!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <p className="text-gray-600 text-xs">
+          Located in the heart of Guwahati’s fashion district
+        </p>
+      </div>
+
+      {/* Factory */}
+      <div className="space-y-3 text-center md:text-left">
+        <div className="flex items-center justify-center md:justify-start gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-crimson-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l9-7 9 7v11a1 1 0 01-1 1h-4a1 1 0 01-1-1v-5H9v5a1 1 0 01-1 1H4a1 1 0 01-1-1V10z" />
+          </svg>
+          <h3 className="text-lg font-serif font-semibold text-gray-800">Factory</h3>
+        </div>
+
+        <div className="rounded-2xl overflow-hidden h-60 shadow-md border border-gray-200">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d14330.918865269847!2d91.7047147009593!3d26.10774023417452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjbCsDA1JzU4LjQiTiA5McKwNDMnMTMuMiJF!5e0!3m2!1sen!2sin!4v1762778856334!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <p className="text-gray-600 text-xs">
+          Our hub of craftsmanship and production excellence
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
     </div>
   );
 };
