@@ -195,20 +195,6 @@ export default function ProductList() {
                         )}
                       </div>
 
-                      <div className="flex space-x-1">
-                        <button
-                          onClick={() => navigate(`/admin/products/edit/${product.id}`)}
-                          className="p-1 text-blue-600 hover:bg-blue-50 rounded transition"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="p-1 text-red-600 hover:bg-red-50 rounded transition"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
                     </div>
 
                   </div>
