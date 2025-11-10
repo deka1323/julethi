@@ -1,6 +1,7 @@
 import apiService from "../../services/api";
 
 export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_PRODUCT = "SET_PRODUCT";
 export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 export const ADD_PRODUCT = "ADD_PRODUCT";
@@ -10,6 +11,11 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const setProducts = (products) => ({
   type: SET_PRODUCTS,
   payload: products,
+});
+
+export const setProduct = (product) => ({
+  type: SET_PRODUCT,
+  payload: product,
 });
 
 export const setLoading = (loading) => ({
@@ -44,6 +50,25 @@ export const fetchAllProducts = () => async (dispatch) => {
     if (response.success) {
       console.log("allProducts : ", response.data);
       dispatch(setProducts(response.data));
+    }
+    dispatch(setLoading(false));
+    return response;
+  } catch (error) {
+    console.log("error - ", error);
+    dispatch(setError(error.message));
+    dispatch(setLoading(false));
+    throw error;
+  }
+};
+
+export const fetchProduct = (productId) => async (dispatch) => {
+  console.log("productId of the product to be fetched: ", productId);
+  dispatch(setLoading(true));
+  try {
+    const response = await apiService.getProductById(productId);
+    console.log("response from the API: ", response);
+    if (response.success) {
+      dispatch(setProduct(response.data));
     }
     dispatch(setLoading(false));
     return response;

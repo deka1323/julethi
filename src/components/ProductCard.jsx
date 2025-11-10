@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onProductClick }) {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);
   const intervalRef = useRef(null);
@@ -47,16 +48,18 @@ export default function ProductCard({ product }) {
     }
   };
 
-  return (
-    <Link
-      to={`/product/${product.id}`}
-      className="group relative w-full sm:w-64 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-transparent hover:border-crimson-200"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+  const handleClick = async (e) => {
+    if (onProductClick) {
+      e.preventDefault();
+      await onProductClick(product.id);
+      navigate(`/product/${product.id}`);
+    }
+  };
+
+  const cardClassName = "group relative w-full sm:w-64 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-transparent hover:border-crimson-200";
+
+  const cardContent = (
+    <>
       {/* 🖼️ Image Slider */}
       <div className="relative overflow-hidden h-72 rounded-t-2xl">
         {product.isNewArrival && (
@@ -127,6 +130,38 @@ export default function ProductCard({ product }) {
           )}
         </div>
       </div>
+    </>
+  );
+
+  // If onProductClick is provided, render as div with onClick, otherwise render as Link
+  if (onProductClick) {
+    return (
+      <div
+        className={cardClassName}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleClick}
+        style={{ cursor: 'pointer' }}
+      >
+        {cardContent}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      to={`/product/${product.id}`}
+      className={cardClassName}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {cardContent}
     </Link>
   );
 }

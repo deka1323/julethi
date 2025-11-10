@@ -85,8 +85,9 @@ export default function ProductList() {
             >
               <option value="all">All Categories</option>
               <option value="bridal">Bridal</option>
-              <option value="men">Men</option>
+              <option value="mensWear">Mens Wear</option>
               <option value="occasion">Occasion</option>
+              <option value="houseOfLuit">House of Luit</option>
             </select>
           </div>
         </div>

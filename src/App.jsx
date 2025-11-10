@@ -30,7 +30,7 @@ function Layout() {
         <Route path="/shop/bridal" element={<BridalWear />} />
         <Route path="/shop/occasion" element={<OccasionWear />} />
         <Route path="/shop/men" element={<MensWear />} />
-        <Route path="/house-of-luit" element={<HouseOfLuit />} /> 
+        <Route path="/house-of-luit" element={<HouseOfLuit />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

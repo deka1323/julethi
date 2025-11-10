@@ -9,7 +9,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 function generateProductId(category) {
-  const prefixMap = { bridal: "BR",men: "FS", occasion: "OC"};
+  const prefixMap = { bridal: "BR", mensWear: "MN", occasion: "OC", houseOfLuit: "HOL" };
   const prefix = prefixMap[category] || "PR";
   const randomNum = Math.floor(100000 + Math.random() * 900000);
   return `${prefix}${randomNum}`;
@@ -119,7 +119,19 @@ export default function AddProduct() {
         })
       );
 
-      const productData = { ...formData, images: publicUrls, productId };
+      // Filter out empty productDetails and include in productData
+      const filteredProductDetails = productDetails.filter(detail => detail.trim() !== "");
+
+      const productData = {
+        ...formData,
+        price: parseFloat(formData.price) || 0,
+        discountedPrice: formData.discountedPrice ? parseFloat(formData.discountedPrice) : undefined,
+        images: publicUrls,
+        productId,
+        productDetails: filteredProductDetails
+      };
+      console.log("FormData : ", formData)
+      console.log("ProductDetails : ", filteredProductDetails)
       console.log("productData : ", productData)
       await dispatch(createProduct(productData));
       toast.success("✅ Product added successfully!");
@@ -207,8 +219,9 @@ export default function AddProduct() {
               >
                 <option value="">Select Category</option>
                 <option value="bridal">Bridal Wear</option>
-                <option value="men">Mens Wear</option>
+                <option value="mensWear">Mens Wear</option>
                 <option value="occasion">Occasion Wear</option>
+                <option value="houseOfLuit">House of Luit</option>
               </select>
             </div>
           </div>

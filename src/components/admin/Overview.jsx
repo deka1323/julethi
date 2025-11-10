@@ -14,8 +14,9 @@ export default function Overview() {
 
   const totalProducts = products.length;
   const bridalCount = products.filter((p) => p.category === 'bridal').length;
-  const menCount = products.filter((p) => p.category === 'men').length;
+  const menCount = products.filter((p) => p.category === 'mensWear').length;
   const occasionCount = products.filter((p) => p.category === 'occasion').length;
+  const houseOfLuitCount = products.filter((p) => p.category === 'houseOfLuit').length;
   const newArrivals = products.filter((p) => p.isNewArrival).length;
   const totalValue = products.reduce((sum, p) => sum + p.price, 0);
   const averagePrice = totalProducts > 0 ? (totalValue / totalProducts).toFixed(0) : 0;
@@ -59,6 +60,7 @@ export default function Overview() {
     { name: 'Bridal Wear', count: bridalCount, color: 'bg-pink-500', percentage: ((bridalCount / totalProducts) * 100).toFixed(0) },
     { name: 'Mens Wear', count: menCount, color: 'bg-blue-500', percentage: ((menCount / totalProducts) * 100).toFixed(0) },
     { name: 'Occasion Wear', count: occasionCount, color: 'bg-teal-500', percentage: ((occasionCount / totalProducts) * 100).toFixed(0) },
+    { name: 'House of Luit', count: houseOfLuitCount, color: 'bg-amber-500', percentage: ((houseOfLuitCount / totalProducts) * 100).toFixed(0) },
   ];
 
   const recentProducts = [...products]

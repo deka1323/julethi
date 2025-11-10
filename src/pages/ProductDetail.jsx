@@ -1,27 +1,66 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, MessageCircle, Tag, Heart } from "lucide-react";
 import ProductCard from "../components/ProductCard";
+import { fetchProduct } from "../redux/actions/productActions";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.products.product);
+  console.log("PRODUCT DETAILS : ", product)
   const products = useSelector((state) => state.products.products);
-  const product = products.find((p) => p.id === id);
-
-  console.log("PRODUCTS : ", products)
-  console.log("PRODUCT : ", product)
+  const loading = useSelector((state) => state.products.loading);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [currentImage, setCurrentImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const sliderRef = useRef(null);
   const touchStartX = useRef(0);
 
+  // Fetch product on mount and when id changes
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProduct(id));
+    }
+  }, [id, dispatch]);
+
+  // Get images - use empty array as fallback to prevent errors
+  const images = product?.images && product.images.length > 0
+    ? product.images
+    : (product?.imgUrl ? [product.imgUrl] : []);
+  const totalImages = images.length;
+
+  // 🌀 Auto-slide on hover (desktop) - only run if product exists
+  useEffect(() => {
+    if (!product || !isHovered || totalImages === 0) return;
+    const interval = setInterval(() => {
+      setCurrentImage((prev) =>
+        prev === totalImages - 1 ? 0 : prev + 1
+      );
+    }, 1500); // slower transition
+    return () => clearInterval(interval);
+  }, [isHovered, totalImages, product]);
+
+  console.log("PRODUCT : ", product)
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-crimson-600 mx-auto mb-4"></div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Loading product...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle case where product is not found or not yet loaded
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -37,20 +76,6 @@ export default function ProductDetail() {
       </div>
     );
   }
-
-  const images = product.images && product.images.length > 0 ? product.images : [product.imgUrl];
-  const totalImages = images.length;
-
-  // 🌀 Auto-slide on hover (desktop)
-  useEffect(() => {
-    if (!isHovered) return;
-    const interval = setInterval(() => {
-      setCurrentImage((prev) =>
-        prev === images.length - 1 ? 0 : prev + 1
-      );
-    }, 1500); // slower transition
-    return () => clearInterval(interval);
-  }, [isHovered, images.length]);
 
   // 📱 Swipe gestures for mobile
   const handleTouchEnd = (e) => {

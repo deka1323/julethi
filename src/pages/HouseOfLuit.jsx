@@ -1,16 +1,37 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/ProductCard';
+import { fetchAllProducts, fetchProduct } from '../redux/actions/productActions';
+import { useEffect } from 'react';
 
 const HouseOfLuit = () => {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
 
-  // Filter relevant categories
-  const lifestyleProducts = products.filter(
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+
+  console.log("ALL PRODUCTS : ", products)
+
+
+  const houseOfLuitProducts = products.filter(
     (p) =>
-      p.category === 'cotton' ||
-      p.category === 'home-decor' ||
-      p.category === 'jewelry'
+      p.category === 'houseOfLuit'
   );
+
+  console.log("houseOfLuitProducts : ", houseOfLuitProducts)
+
+  // Filter relevant categories
+  // const houseOfLuitProducts = houseOfLuitProducts.filter(
+  //   (p) =>
+  //     p.category === 'cotton' ||
+  //     p.category === 'home-decor' ||
+  //     p.category === 'jewelry'
+  // );
+
+  const handleProductClick = async (productId) => {
+    await dispatch(fetchProduct(productId));
+  };
 
   return (
     <div className="pt-14 min-h-screen">
@@ -46,7 +67,7 @@ const HouseOfLuit = () => {
                 The Cotton & Lifestyle Collection
               </h2>
               <p className="text-gray-600">
-                {lifestyleProducts.length} beautifully handcrafted pieces
+                {houseOfLuitProducts.length} beautifully handcrafted pieces
               </p>
             </div>
           </div>
@@ -81,8 +102,12 @@ const HouseOfLuit = () => {
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-            {lifestyleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {houseOfLuitProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onProductClick={handleProductClick}
+              />
             ))}
           </div>
         </div>

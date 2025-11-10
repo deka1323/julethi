@@ -40,7 +40,17 @@ const Shop = () => {
   }
 
   if (selectedCategory !== 'all') {
-    filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+    // Handle both 'mensWear' and legacy 'men' category values
+    if (selectedCategory === 'mensWear') {
+      filteredProducts = filteredProducts.filter(product =>
+        product.category === 'mensWear' || product.category === 'men'
+      );
+    } else {
+      filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+    }
+  } else {
+    // When 'all' is selected, exclude HouseOfLuit products
+    filteredProducts = filteredProducts.filter(product => product.category !== 'houseOfLuit');
   }
 
   if (sortBy === 'price-low') {
@@ -52,12 +62,11 @@ const Shop = () => {
   }
 
   const categories = [
-    { id: 'all', name: 'All Collections', count: showNewArrivalsOnly ? allProducts.filter(p => p.isNewArrival).length : allProducts.length },
+    { id: 'all', name: 'All Collections', count: showNewArrivalsOnly ? allProducts.filter(p => p.isNewArrival && p.category !== 'houseOfLuit').length : allProducts.filter(p => p.category !== 'houseOfLuit').length },
     { id: 'bridal', name: 'Bridal Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'bridal' && p.isNewArrival).length : allProducts.filter(p => p.category === 'bridal').length },
     { id: 'occasion', name: 'Occasion Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'occasion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'occasion').length },
-    { id: 'men', name: 'Mens Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'men' && p.isNewArrival).length : allProducts.filter(p => p.category === 'men').length },
-    { id: 'house-of-luit', name: 'House of Luit', count: showNewArrivalsOnly? allProducts.filter((p) => p.category === 'cotton' && p.isNewArrival).length: allProducts.filter((p) => p.category === 'cotton').length}
-
+    { id: 'mensWear', name: 'Mens Wear', count: showNewArrivalsOnly ? allProducts.filter(p => (p.category === 'mensWear' || p.category === 'men') && p.isNewArrival).length : allProducts.filter(p => p.category === 'mensWear' || p.category === 'men').length },
+    { id: 'houseOfLuit', name: 'House of Luit', count: showNewArrivalsOnly ? allProducts.filter((p) => p.category === 'houseOfLuit' && p.isNewArrival).length : allProducts.filter((p) => p.category === 'houseOfLuit').length }
   ];
 
   return (

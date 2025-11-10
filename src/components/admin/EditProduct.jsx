@@ -172,8 +172,9 @@ export default function EditProduct() {
               >
                 <option value="">Select Category</option>
                 <option value="bridal">Bridal Wear</option>
-                <option value="fusion">Fusion Wear</option>
+                <option value="mensWear">Mens Wear</option>
                 <option value="occasion">Occasion Wear</option>
+                <option value="houseOfLuit">House of Luit</option>
               </select>
             </div>
           </div>
