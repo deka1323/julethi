@@ -15,7 +15,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email',
-      details: ['zinuraaz@gmail.com']
+      details: ['info@julethi.com']
     },
     {
       icon: Clock,

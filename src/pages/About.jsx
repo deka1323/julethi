@@ -361,12 +361,12 @@ const About = () => {
         {[
           {
             name: "Zinku",
-            role: "Creative Director",
+            role: "Founder & Creative Lead",
             image: "/images/zinku.jpg",
           },
           {
             name: "Ranjan",
-            role: "Operations Head",
+            role: "Co-Founder and Business Lead",
             image: "/images/ranjan.jpeg",
           },
         ].map((member, idx) => (

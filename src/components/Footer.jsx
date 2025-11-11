@@ -14,7 +14,7 @@ const Footer = () => {
               alt="Julethi by Zinku"
               className="h-10 sm:h-12 mb-1 sm:mb-2 mx-auto sm:mx-0 object-contain"
             />
-            <p className="text-white text-xs mb-2 sm:mb-4">by Zinku</p>
+            {/* <p className="text-white text-xs mb-2 sm:mb-4">by Zinku</p> */}
             <p className="text-crimson-300 text-xs leading-relaxed">
               Celebrating Assamese heritage through exquisite couture, blending traditional craftsmanship with contemporary elegance.
             </p>
@@ -56,7 +56,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-2 text-xs">
                 <Mail className="h-3 w-3 text-amber-300" />
-                <span className="text-crimson-300">zinuraaz@gmail.com</span>
+                <span className="text-crimson-300">info@julethi.com</span>
               </div>
 
               {/* Social Icons */}
@@ -79,7 +79,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-crimson-700 mt-6 pt-4 text-center">
           <p className="text-crimson-400 text-xs sm:text-sm">
-            © 2025 Julethi by Zinku. All rights reserved. | Powered by Ampire Technologies
+            © 2025 Julethi Handloom and Textiles LLP. All rights reserved. | Powered by Ampire Technologies
           </p>
         </div>
       </div>

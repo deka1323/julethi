@@ -602,7 +602,7 @@ useEffect(() => {
                 rel="noopener noreferrer"
                 className="hover:text-amber-600 transition-colors duration-300"
               >
-                @julethi_by_zinku
+                @julethi
               </a>
             </h2>
 
