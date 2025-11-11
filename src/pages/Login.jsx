@@ -18,7 +18,7 @@ export default function Login() {
     setError('');
     setLoading(true);
 
-    if (username === 'admin' && password === 'admin123') {
+    if (username === 'julethiAdmin' && password === 'JulethiAdmin12345') {
       const user = {
         username: 'admin',
         isAdmin: true,
@@ -105,10 +105,6 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-600">
-          <p>Demo credentials:</p>
-          <p className="font-mono text-xs mt-1">Username: admin | Password: admin123</p>
-        </div>
       </motion.div>
     </div>
   );
