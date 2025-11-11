@@ -67,13 +67,13 @@ const Home = () => {
     {
       title: 'Bridal Collection',
       // description: 'Timeless elegance for your special day',
-      image: '/images/f1.jpg',
+      image: '/images/f1.png',
       link: '/shop/bridal'
     },
     {
       title: 'Occasion Classics',
       // description: 'Perfect for celebrations and festivities',
-      image: '/images/f2.jpg',
+      image: '/images/f2.png',
       link: '/shop/occasion'
     },
     {
