@@ -366,7 +366,7 @@ const About = () => {
           },
           {
             name: "Ranjan",
-            role: "Co-Founder and Business Lead",
+            role: "Co-Founder & Business Lead",
             image: "/images/ranjan.jpeg",
           },
         ].map((member, idx) => (

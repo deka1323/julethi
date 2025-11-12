@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/ProductCard';
 import { fetchProduct } from '../redux/actions/productActions';
+import { useNavigate } from 'react-router-dom';
 
 const OccasionWear = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector((state) => state.products.products);
   const occasionProducts = products.filter((p) => p.category === 'occasion');
 
@@ -31,6 +33,33 @@ const OccasionWear = () => {
           </p>
         </div>
       </section>
+
+      {/* 🎉 Compact Custom Section – Occasion Wear */}
+<section className="bg-gradient-to-b from-white to-crimson-50 py-8 px-4">
+  <div className="max-w-5xl mx-auto flex flex-row items-center justify-between gap-4">
+    {/* Text Section */}
+    <div className="flex-1 text-left">
+      <h2 className="text-xl md:text-2xl font-serif font-semibold text-crimson-900 mb-2">
+        Customize Your Occasion Look
+      </h2>
+      <p className="text-gray-700 text-sm md:text-base max-w-xl">
+        Design an outfit that reflects your unique style for any special occasion- 
+        tailored to perfection with premium craftsmanship.
+      </p>
+    </div>
+
+    {/* Button Section */}
+    <div className="flex-shrink-0">
+      <button
+        onClick={() => navigate('/custom')}
+        className="bg-gradient-to-r from-crimson-700 to-crimson-900 text-white px-5 py-2 rounded-md font-semibold hover:from-crimson-800 hover:to-crimson-950 transition text-sm md:text-base shadow-md"
+      >
+        Start Custom Design
+      </button>
+    </div>
+  </div>
+</section>
+
 
       {/* Collection Section */}
 <section className="py-16">

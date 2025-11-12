@@ -61,11 +61,11 @@ const CustomOrder = () => {
       {/* Hero Section */}
       <section className="text-center py-10 sm:py-12 bg-gradient-to-r from-crimson-900 to-crimson-700 text-white">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-3 sm:mb-4">
-          Create Your Own Bridal Attire
+          Create Your Own Attire
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-amber-100 px-4">
           Every masterpiece begins with a conversation. Let's craft something
-          timeless and personal — just for you.
+          timeless and personal- just for you.
         </p>
       </section>
 

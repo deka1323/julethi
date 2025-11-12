@@ -62,7 +62,7 @@ const Shop = () => {
     { id: 'bridal', name: 'Bridal Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'bridal' && p.isNewArrival).length : allProducts.filter(p => p.category === 'bridal').length },
     { id: 'occasion', name: 'Occasion Wear', count: showNewArrivalsOnly ? allProducts.filter(p => p.category === 'occasion' && p.isNewArrival).length : allProducts.filter(p => p.category === 'occasion').length },
     { id: 'mensWear', name: 'Mens Wear', count: showNewArrivalsOnly ? allProducts.filter(p => (p.category === 'mensWear' || p.category === 'men') && p.isNewArrival).length : allProducts.filter(p => p.category === 'mensWear' || p.category === 'men').length },
-    { id: 'houseOfLuit', name: 'House of Luit', count: showNewArrivalsOnly ? allProducts.filter((p) => p.category === 'houseOfLuit' && p.isNewArrival).length : allProducts.filter((p) => p.category === 'houseOfLuit').length }
+    { id: 'houseOfLuit', name: 'House of Luit', count: showNewArrivalsOnly ? allProducts.filter((p) => p.category === 'houseOfLuit' && p.isNewArrival).length : allProducts.filter((p) => p.category === 'houseOfLuit').length },
   ];
 
   return (
@@ -85,33 +85,50 @@ const Shop = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
-            <button
-              onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${showNewArrivalsOnly
-                ? 'bg-rose-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
-                }`}
-            >
-              {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
-                  ? 'bg-crimson-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
-                  }`}
-              >
-                {category.name} ({category.count})
-              </button>
-            ))}
-          </div>
-        </div>
+<div className="mb-8">
+  <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
+    {/* New Arrivals Toggle */}
+    <button
+      onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
+      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+        showNewArrivalsOnly
+          ? 'bg-rose-500 text-white'
+          : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
+      }`}
+    >
+      {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
+    </button>
+
+    {/* Custom Order Button */}
+    <Link
+      to="/custom"
+      className="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-crimson-700 hover:bg-crimson-200 transition shadow-sm"
+
+    >
+      Custom Order
+    </Link>
+  </div>
+
+  {/* Category Buttons */}
+  <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+    {categories.map((category) => (
+      <button
+        key={category.id}
+        onClick={() => setSelectedCategory(category.id)}
+        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+          selectedCategory === category.id
+            ? 'bg-crimson-600 text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
+        }`}
+      >
+        {category.name} ({category.count})
+      </button>
+    ))}
+  </div>
+</div>
+
+
+        
 
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 pb-4 border-b border-gray-200 space-y-2 sm:space-y-0">
