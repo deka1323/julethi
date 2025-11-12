@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "https://www.julethi.com/*"
+  to = "https://julethi.com/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
