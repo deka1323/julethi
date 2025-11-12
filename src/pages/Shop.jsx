@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Filter, Grid, List, Heart } from 'lucide-react';
-import { fetchAllProducts } from '../redux/actions/productActions';
+import { fetchAllProducts, fetchProduct } from '../redux/actions/productActions';
 import ImageCarousel from '../components/ImageCarousel';
+import ProductCard from '../components/ProductCard';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const Shop = () => {
   }, [filterParam]);
 
   let filteredProducts = allProducts;
+
+  const handleProductClick = async (productId) => {
+    await dispatch(fetchProduct(productId));
+  };
 
   if (searchQuery) {
     filteredProducts = filteredProducts.filter(product =>
@@ -89,51 +94,49 @@ const Shop = () => {
         </div>
 
         {/* Category Filter */}
-<div className="mb-6">
-  {/* Top Row: New Arrivals + Custom Order */}
-  <div className="flex justify-center sm:justify-between items-center gap-3 mb-4 flex-wrap">
-    <button
-      onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
-      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-        showNewArrivalsOnly
-          ? 'bg-rose-500 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
-      }`}
-    >
-      {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
-    </button>
+        <div className="mb-6">
+          {/* Top Row: New Arrivals + Custom Order */}
+          <div className="flex justify-center sm:justify-between items-center gap-3 mb-4 flex-wrap">
+            <button
+              onClick={() => setShowNewArrivalsOnly(!showNewArrivalsOnly)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${showNewArrivalsOnly
+                ? 'bg-rose-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-rose-50 hover:text-rose-600'
+                }`}
+            >
+              {showNewArrivalsOnly ? '✓ ' : ''}New Arrivals Only
+            </button>
 
-    {/* Gradient Custom Order Button */}
-    <Link
-      to="/custom"
-      className="bg-gradient-to-r from-crimson-600 to-crimson-500 hover:opacity-90 text-amber-200 text-sm font-medium px-5 py-2 rounded-full shadow-md transition-all duration-300 whitespace-nowrap"
-    >
-      Custom Order
-    </Link>
-  </div>
+            {/* Gradient Custom Order Button */}
+            <Link
+              to="/custom"
+              className="bg-gradient-to-r from-crimson-600 to-crimson-500 hover:opacity-90 text-amber-200 text-sm font-medium px-5 py-2 rounded-full shadow-md transition-all duration-300 whitespace-nowrap"
+            >
+              Custom Order
+            </Link>
+          </div>
 
-  {/* Scrollable Category Row */}
-  <div className="relative">
-    <div
-      className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 sm:px-0"
-      style={{ WebkitOverflowScrolling: 'touch' }}
-    >
-      {categories.map((category) => (
-        <button
-          key={category.id}
-          onClick={() => setSelectedCategory(category.id)}
-          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            selectedCategory === category.id
-              ? 'bg-crimson-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
-          }`}
-        >
-          {category.name} ({category.count})
-        </button>
-      ))}
-    </div>
-  </div>
-</div>
+          {/* Scrollable Category Row */}
+          <div className="relative">
+            <div
+              className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 sm:px-0"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                    ? 'bg-crimson-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-crimson-50 hover:text-crimson-600'
+                    }`}
+                >
+                  {category.name} ({category.count})
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
 
         {/* Toolbar */}
@@ -173,7 +176,7 @@ const Shop = () => {
             </button>
           </div>
         </div>
-        
+
 
         {/* Loading */}
         {loading && (
@@ -190,86 +193,13 @@ const Shop = () => {
               : "grid-cols-1"
               }`}
           >
-            {filteredProducts.map((product) => {
-              const mainImage =
-                product.images && product.images.length > 0
-                  ? product.images[0]
-                  : product.imgUrl;
-              console.log("mainImage : ", mainImage)
-              const hoverImage =
-                product.images && product.images.length > 1
-                  ? product.images[1]
-                  : mainImage;
-              console.log("hoverImage :", hoverImage)
-
-              return (
-                <Link
-                  to={`/product/${product.id}`}
-                  key={product.id}
-                  className={`group cursor-pointer ${viewMode === "list"
-                    ? "flex flex-col sm:flex-row space-x-0 sm:space-x-6"
-                    : "w-full max-w-[280px] sm:max-w-full mx-auto"
-                    }`}
-                >
-                  {/* Image Container */}
-                  {/* Image Carousel Container */}
-                  <div
-                    className={`relative overflow-hidden rounded-2xl shadow-sm group ${viewMode === "list"
-                      ? "w-full sm:w-48 h-60 sm:h-48 flex-shrink-0 mb-2 sm:mb-0"
-                      : "h-80 sm:h-80 mb-4"
-                      }`}
-                  >
-                    {product.isNewArrival && (
-                      <span className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 text-xs font-semibold rounded-full z-10">
-                        New
-                      </span>
-                    )}
-
-                    {/* Image Carousel */}
-                    <ImageCarousel images={product.images || [product.imgUrl]} />
-
-                    {/* Wishlist Icon */}
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                      <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-50">
-                        <Heart className="h-5 w-5 text-gray-600" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className={viewMode === "list" ? "flex-1 mt-2 sm:mt-0" : ""}>
-                    <h3 className="text-sm text-gray-800 font-medium mb-2 line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <div className="flex items-center gap-1 mt-1">
-                      {product.discountedPrice ? (
-                        <>
-                          <span className="text-sm font-semibold text-rose-600">
-                            ₹{product.discountedPrice.toLocaleString("en-IN")}
-                          </span>
-                          <span className="text-xs text-gray-400 line-through">
-                            ₹{product.price.toLocaleString("en-IN")}
-                          </span>
-                          <span className="text-xs text-green-600 font-medium">
-                            ({Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% OFF)
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-sm font-semibold text-crimson-700">
-                          ₹{product.price.toLocaleString("en-IN")}
-                        </span>
-                      )}
-                    </div>
-
-                    {viewMode === "list" && (
-                      <p className="text-gray-600 text-sm mt-2 line-clamp-2">
-                        {product.description}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onProductClick={handleProductClick}
+              />
+            ))}
           </div>
         )}
 
