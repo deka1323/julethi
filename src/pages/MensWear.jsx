@@ -1,16 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/ProductCard';
-import { fetchAllProducts, fetchProduct } from '../redux/actions/productActions';
-import { useEffect } from 'react';
+import { fetchProduct } from '../redux/actions/productActions';
 
 const MensWear = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  const mensProducts = products.filter((p) => p.category === 'mensWear');
-
-  useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, [dispatch]);
+  const mensProducts = products.filter((p) => p.category === 'men');
 
   const handleProductClick = async (productId) => {
     await dispatch(fetchProduct(productId));
@@ -22,7 +17,7 @@ const MensWear = () => {
       <section className="relative bg-gradient-to-r from-crimson-900 to-crimson-700 text-white py-12">
         <div className="absolute inset-0">
           <img
-            src="/images/men.jpg"
+            src="/images/mens-hero.jpg"
             alt="Men's Wear hero"
             className="w-full h-full object-cover opacity-20"
           />
@@ -53,9 +48,9 @@ const MensWear = () => {
           {/* Product Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             {mensProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
+              <ProductCard 
+                key={product.id} 
+                product={product} 
                 onProductClick={handleProductClick}
               />
             ))}

@@ -57,7 +57,7 @@ export default function ProductCard({ product, onProductClick }) {
   };
 
   const cardClassName = "group relative w-full sm:w-64 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-transparent hover:border-crimson-200";
-
+  
   const cardContent = (
     <>
       {/* 🖼️ Image Slider */}
