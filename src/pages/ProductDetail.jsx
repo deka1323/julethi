@@ -265,6 +265,17 @@ export default function ProductDetail() {
                   {product.fabric}
                 </div>
               </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">Product Details</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">{product.productDetails ? (product.productDetails?.map((i) => (<li>{i}</li>))) :
+                  (<div><li>Handcrafted with premium materials Hello</li>
+                    <li>Perfect for special occasions</li>
+                    <li>Customization available</li>
+                    <li>Dry clean only</li>
+                  </div>)}
+                </ul>
+              </div>
             </div>
           </div>
 
